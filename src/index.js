@@ -47,6 +47,12 @@ class LoadingBar extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.state.progress !== this.props.progress) {
+      this.setState({progress: this.props.progress})
+    }
+  }
+
   // Check whether the proggress is full
   checkIfFull = () => {
     if (this.state.progress >= 100) {
@@ -109,7 +115,8 @@ LoadingBar.propTypes = {
   color: PropTypes.string,
   height: PropTypes.number,
   onLoaderFinished: PropTypes.func,
-  onProgressChange: PropTypes.func
+  onProgressChange: PropTypes.func,
+  className: PropTypes.string
 }
 
 export default LoadingBar

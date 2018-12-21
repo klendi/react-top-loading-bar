@@ -1,13 +1,47 @@
 {
   "name": "react-top-loading-bar",
-  "version": "1.0.0",
-  "description": "",
-  "author": "klendi",
+  "version": "1.0.2",
+  "description": "A very simple, highly customisable react top loader component.",
+  "author": {
+    "name": "Klendi Gocci",
+    "email": "klendigocci@gmail.com",
+    "url": "https://github.com/klendi"
+  },
+  "user": "klendi",
   "license": "MIT",
-  "repository": "klendi/react-top-loading-bar",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "keywords": [
+    "react component",
+    "react-loading",
+    "react-loader",
+    "animated loader",
+    "react youtube like loader",
+    "react",
+    "animated react loader",
+    "react-animated-loader",
+    "react-top-loader",
+    "react",
+    "reactjs",
+    "react-component",
+    "loading-bar",
+    "youtube-loading-bar",
+    "loading",
+    "react-loading-bar",
+    "redux-loading-bar",
+    "loading bar",
+    "smooth",
+    "animated",
+    "youtube loading bar",
+    "top loading bar",
+    "component"
+  ],
+  "homepage": "https://klendi.github.io/react-top-loading-bar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klendi/react-top-loading-bar.git"
+  },
   "engines": {
     "node": ">=8",
     "npm": ">=5"
