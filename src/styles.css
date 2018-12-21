@@ -1,0 +1,26 @@
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f11946;
+  height: 3px;
+  opacity: 1;
+  transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  z-index: 999999;
+}
+
+.loading-bar-full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 0;
+  opacity: 0;
+  transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  z-index: 999999;
+}
