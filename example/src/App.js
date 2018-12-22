@@ -79,8 +79,11 @@ export default class App extends Component {
           <button className={'btn ' + this.state.color} onClick={() => this.complete()}>Complete</button>
           <br />
           <button className={'btn ' + this.state.color} onClick={() => this.changeColor()}>Change Color</button>
-          <a className={'btn ' + this.state.color} target='_blank' href='https://github.com/klendi/react-top-loading-bar'>Star on github</a>
           <a className={'btn ' + this.state.color} target='_blank' href='https://github.com/klendi/react-top-loading-bar/blob/master/example/src/App.js'>Example</a>
+          <div className='github-buttons'>
+            <a className='github-button' href='https://github.com/klendi/react-top-loading-bar' data-size='large' data-show-count='true' aria-label='Star klendi/react-top-loading-bar on GitHub'>Star</a>
+            <a className='github-button' href='https://github.com/klendi' data-size='large' data-show-count='true' aria-label='Follow @klendi on GitHub'>Follow @klendi</a>
+          </div>
         </div>
       </div>
     )
