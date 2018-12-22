@@ -48,7 +48,7 @@ export default class App extends Component {
           progress={this.state.loadingBarProgress}
           height={3}
           color="red"
-          onLoaderFinished={() => this.onLoaderFinished}
+          onLoaderFinished={() => this.onLoaderFinished()}
         />
         <button onClick={() => this.add(10)}>Add 10</button>
         <button onClick={() => this.add(30)}>Add 30</button>
@@ -58,6 +58,9 @@ export default class App extends Component {
   }
 }
 ```
+
+## Demo
+[Click here for demo](https://klendi.github.io/react-top-loading-bar/)
 
 ## Properties
 
