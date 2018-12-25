@@ -2,7 +2,13 @@
 
 >
 
-[![NPM](https://img.shields.io/npm/v/react-top-loading-bar.svg)](https://www.npmjs.com/package/react-top-loading-bar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-top-loading-bar.svg)](https://www.npmjs.com/package/react-top-loading-bar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
+[![npm download][download-image]][download-url]
+
+[download-image]: https://img.shields.io/npm/dm/react-top-loading-bar.svg
+[download-url]: https://npmjs.org/package/react-top-loading-bar
+
+[![react-top-loading-bar](https://nodei.co/npm/react-top-loading-bar.png)](https://npmjs.org/package/react-top-loading-bar)
 
 ## Install
 * using npm
