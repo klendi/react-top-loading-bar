@@ -4,29 +4,26 @@ import PropTypes from 'prop-types'
 import styles from './styles.css'
 
 class LoadingBar extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   state = {
     show: true,
     full: false,
     progress: 0,
     wait: false
-  }
+  };
 
   render() {
-    const { className } = this.props
+    const { className, height } = this.props
     const { show, full } = this.state
-
     return (
-      <div>
+      <div style={{ height: height }}>
         {show ? (
           <div
             className={
               styles['loading-bar'] +
-              (className || '') +
-              (full ? styles['loading-bar-full'] : '')
+                ' ' +
+                (className || '') +
+                ' ' +
+                (full ? styles['loading-bar-full'] : '')
             }
             style={this.barStyle()}
           />
@@ -49,7 +46,7 @@ class LoadingBar extends Component {
 
   componentDidMount() {
     if (this.state.progress !== this.props.progress) {
-      this.setState({progress: this.props.progress})
+      this.setState({ progress: this.props.progress })
     }
   }
 
@@ -91,23 +88,29 @@ class LoadingBar extends Component {
         // Duration is depend on css animation-duration of loading-bar
       }, 700)
     }
-  }
+  };
 
   // apply width style to our element as inline style
   barStyle() {
     // When loading bar still in progress
-    const { color, height } = this.props
+    const { color } = this.props
 
     if (!this.state.wait) {
       return {
         width: `${this.state.progress}%`,
-        backgroundColor: color,
-        height: height
+        backgroundColor: color
       }
     } else {
       return { width: '100%', backgroundColor: color }
     }
   }
+}
+
+LoadingBar.defaultProps = {
+  progress: 0,
+  color: '#f11946',
+  height: 3,
+  className: ''
 }
 
 LoadingBar.propTypes = {

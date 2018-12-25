@@ -7,6 +7,7 @@ export default class App extends Component {
     loadingBarProgress: 10,
     barColor: '#f11946',
     color: 'red'
+
   }
 
   add = value => {
@@ -82,6 +83,7 @@ export default class App extends Component {
           <a className={'btn ' + this.state.color} target='_blank' href='https://github.com/klendi/react-top-loading-bar/blob/master/example/src/App.js'>Example</a>
           <div className='github-buttons'>
             <a className='github-button' href='https://github.com/klendi/react-top-loading-bar' data-size='large' data-show-count='true' aria-label='Star klendi/react-top-loading-bar on GitHub'>Star</a>
+            {' '}
             <a className='github-button' href='https://github.com/klendi' data-size='large' data-show-count='true' aria-label='Follow @klendi on GitHub'>Follow @klendi</a>
           </div>
         </div>
