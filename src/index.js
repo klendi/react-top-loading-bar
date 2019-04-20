@@ -34,8 +34,8 @@ class LoadingBar extends Component {
     return Math.floor(Math.random() * (high - low) + low)
   }
 
-  continousStart = () => {
-    const random = this.randomInt(20, 30)
+  continousStart = startingValue => {
+    const random = startingValue || this.randomInt(20, 30)
     this.setState({ progress: random })
 
     const interval = setInterval(() => {
@@ -50,8 +50,9 @@ class LoadingBar extends Component {
     }, 1000)
   }
 
-  staticStart = () => {
-    const random = this.randomInt(30, 50)
+  staticStart = startingValue => {
+    const random = startingValue || this.randomInt(30, 50)
+
     this.setState({ progress: random }, () => {
       this.onProgressChange()
     })

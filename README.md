@@ -26,7 +26,7 @@ yarn add react-top-loading-bar
 
 ## Usage
 
-### With react ref (useful with functional components or whenever you don't want to use a state, also with ref you can access have some built in methods)
+### With ref
 
 ```jsx
 import React, { Component } from 'react'
@@ -34,14 +34,6 @@ import React, { Component } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
 export default class ExampleWithRefs extends Component {
-  startFetch = () => {
-    this.LoadingBar.startContinous()
-  }
-
-  onFinishFetch = () => {
-    this.LoadingBar.complete()
-  }
-
   render() {
     return (
       <div>
@@ -66,7 +58,7 @@ export default class ExampleWithRefs extends Component {
 }
 ```
 
-### with local state
+### With state
 
 ```jsx
 import React, { Component } from 'react'
@@ -114,6 +106,16 @@ export default class App extends Component {
 
 [Click here for demo](https://klendi.github.io/react-top-loading-bar/)
 
+## Built-in Methods
+
+| Methods                       |    Parameters     | Descriptions                                                                                                                                                                                                                  |
+| ----------------------------- | :---------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| add(value)                    |      Number       | Adds a value to the loading indicator.                                                                                                                                                                                        |
+| decrease(value)               |      Number       | Decreases a value to the loading indicator.                                                                                                                                                                                   |
+| continousStart(startingValue) | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
+| staticStart(startingValue)    | Number (optional) | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                      |
+| complete()                    |                   | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                            |
+
 ## Properties
 
 | Property         | Type     | Default | Description                                                                                                                             |
@@ -124,6 +126,14 @@ export default class App extends Component {
 | className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                                   |
 | onLoaderFinished | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                               |
 | onProgressChange | Function |         | This is called each time loading bar value changes.                                                                                     |
+| onRef            | Function |         | This is used to access built in methods                                                                                                 |
+
+## Projects using react-top-loading-bar
+
+- [React Movies](https://github.com/klendi/react-movies)
+- [WCYB](https://github.com/klendi/wcyb)
+
+Add your own project. Make a PR
 
 ## Code Style
 
