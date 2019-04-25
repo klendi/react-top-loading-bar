@@ -113,7 +113,7 @@ class LoadingBar extends Component {
     }
   }
   componentWillUnmount() {
-    this.props.onRef(undefined)
+    if (this.props.onRef) this.props.onRef(undefined)
   }
   // Check whether the proggress is full
   checkIfFull = () => {
