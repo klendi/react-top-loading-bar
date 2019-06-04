@@ -40,7 +40,8 @@ class LoadingBar extends Component {
 
     const interval = setInterval(() => {
       if (this.state.progress < 90) {
-        const random = this.randomInt(2, 10)
+        const random = this.randomInt(2, 10)        
+        if (!this.mounted) return false
         this.setState({ progress: this.state.progress + random }, () => {
           this.onProgressChange()
         })
@@ -106,6 +107,7 @@ class LoadingBar extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true
     if (this.props.onRef) this.props.onRef(this)
 
     if (this.state.progress !== this.props.progress) {
@@ -113,16 +115,20 @@ class LoadingBar extends Component {
     }
   }
   componentWillUnmount() {
+    this.mounted = false
     if (this.props.onRef) this.props.onRef(undefined)
   }
-  // Check whether the proggress is full
+  // Check whether the progress is full
   checkIfFull = () => {
+    if (!this.mounted) return false
+
     if (this.state.progress >= 100) {
       // Prevent new progress change
       this.setState({ wait: true })
 
       // Start animate it
       setTimeout(() => {
+        if (!this.mounted) return false
         // animate when element removed
         this.setState({
           full: true,
@@ -130,6 +136,7 @@ class LoadingBar extends Component {
         })
 
         setTimeout(() => {
+          if (!this.mounted) return false
           this.setState({
             // remove bar element
             show: false,
@@ -138,6 +145,7 @@ class LoadingBar extends Component {
           })
 
           setTimeout(() => {
+            if (!this.mounted) return false
             this.setState({
               // Show Bar
               full: false,
