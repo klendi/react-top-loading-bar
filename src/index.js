@@ -40,7 +40,7 @@ class LoadingBar extends Component {
 
     const interval = setInterval(() => {
       if (this.state.progress < 90) {
-        const random = this.randomInt(2, 10)        
+        const random = this.randomInt(2, 10)
         if (!this.mounted) return false
         this.setState({ progress: this.state.progress + random }, () => {
           this.onProgressChange()
@@ -165,15 +165,16 @@ class LoadingBar extends Component {
   // apply width style to our element as inline style
   barStyle() {
     // When loading bar still in progress
-    const { color } = this.props
+    const { color, background } = this.props
 
     if (!this.state.wait) {
       return {
         width: `${this.state.progress}%`,
-        backgroundColor: color
+        backgroundColor: color,
+        background: background
       }
     } else {
-      return { width: '100%', backgroundColor: color }
+      return { width: '100%', backgroundColor: color, background }
     }
   }
 }
@@ -182,12 +183,14 @@ LoadingBar.defaultProps = {
   progress: 0,
   color: '#f11946',
   height: 3,
-  className: ''
+  className: '',
+  background: ''
 }
 
 LoadingBar.propTypes = {
   progress: PropTypes.number,
   color: PropTypes.string,
+  background: PropTypes.string,
   height: PropTypes.number,
   onLoaderFinished: PropTypes.func,
   onProgressChange: PropTypes.func,

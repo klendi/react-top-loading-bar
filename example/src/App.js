@@ -49,25 +49,22 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <LoadingBar
-          color={this.state.barColor}
-          onRef={ref => (this.LoadingBar = ref)}
-        />
-        <div className="text-container">
-          <h1 className="header">react-top-loading-bar</h1>
-          <div className="inline">
-            <h3 className="package-install-text">
+        <LoadingBar color='red' onRef={ref => (this.LoadingBar = ref)} />
+        <div className='text-container'>
+          <h1 className='header'>react-top-loading-bar</h1>
+          <div className='inline'>
+            <h3 className='package-install-text'>
               npm i react-top-loading-bar
             </h3>
             <br />
             or
             <br />
-            <h3 className="package-install-text">
+            <h3 className='package-install-text'>
               yarn add react-top-loading-bar
             </h3>
           </div>
         </div>
-        <div className="buttons-group">
+        <div className='buttons-group'>
           <button
             className={'btn ' + this.state.color}
             onClick={() => this.LoadingBar.continousStart()}
@@ -115,28 +112,28 @@ export default class App extends Component {
           </button>
           <a
             className={'btn ' + this.state.color}
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/"
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/'
           >
             Example
           </a>
-          <div className="github-buttons">
+          <div className='github-buttons'>
             <a
-              className="github-button"
-              href="https://github.com/klendi/react-top-loading-bar"
-              data-size="large"
-              data-show-count="true"
-              aria-label="Star klendi/react-top-loading-bar on GitHub"
+              className='github-button'
+              href='https://github.com/klendi/react-top-loading-bar'
+              data-size='large'
+              data-show-count='true'
+              aria-label='Star klendi/react-top-loading-bar on GitHub'
             >
               Star
             </a>{' '}
             <a
-              className="github-button"
-              href="https://github.com/klendi"
-              data-size="large"
-              data-show-count="true"
-              aria-label="Follow @klendi on GitHub"
+              className='github-button'
+              href='https://github.com/klendi'
+              data-size='large'
+              data-show-count='true'
+              aria-label='Follow @klendi on GitHub'
             >
               Follow @klendi
             </a>
