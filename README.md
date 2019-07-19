@@ -24,6 +24,12 @@ npm install --save react-top-loading-bar
 yarn add react-top-loading-bar
 ```
 
+- CDN
+
+```
+https://unpkg.com/react-top-loading-bar
+```
+
 ## Usage
 
 ### With ref
