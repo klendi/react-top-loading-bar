@@ -49,7 +49,10 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <LoadingBar color='red' onRef={ref => (this.LoadingBar = ref)} />
+        <LoadingBar
+          color={this.state.barColor}
+          onRef={ref => (this.LoadingBar = ref)}
+        />
         <div className='text-container'>
           <h1 className='header'>react-top-loading-bar</h1>
           <div className='inline'>
