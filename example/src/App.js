@@ -141,6 +141,17 @@ export default class App extends Component {
               Follow @klendi
             </a>
           </div>
+          <br />
+          <div>
+            Made with ❤️ by{' '}
+            <a
+              href='https://klendi.me'
+              style={{ color: this.state.barColor }}
+              target='_blank'
+            >
+              Klendi Gocci
+            </a>
+          </div>
         </div>
       </div>
     )
