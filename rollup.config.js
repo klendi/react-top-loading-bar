@@ -20,6 +20,16 @@ export default {
       file: pkg.module,
       format: 'es',
       sourcemap: true
+    },
+    {
+      file: pkg.unpkg,
+      format: 'umd',
+      sourcemap: true,
+      name: 'ReactTopLoadingBar',
+      globals: {
+        react: 'React',
+        'prop-types': 'PropTypes'
+      }
     }
   ],
   plugins: [
