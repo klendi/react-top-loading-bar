@@ -201,7 +201,7 @@ class LoadingBar extends Component<IProps, IState> {
   }
 
   // apply width style to our element as inline style
-  barStyle() {
+  private barStyle() {
     // When loading bar still in progress
     const { color, background } = this.props
 
