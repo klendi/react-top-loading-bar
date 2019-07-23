@@ -1,40 +1,79 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// @ts-ignore
 import styles from './styles.css'
 
-class LoadingBar extends Component {
+type IState = {
+  show: boolean
+  full: boolean
+  progress: number
+  wait: boolean
+}
+
+type IProps = {
+  progress?: number
+  color?: string
+  background?: string
+  height?: number
+  onLoaderFinished?: Function
+  onProgressChange?: Function
+  className?: string
+  onRef?: Function
+}
+
+class LoadingBar extends Component<IProps, IState> {
   state = {
     show: true,
     full: false,
     progress: 0,
     wait: false
   }
+  static propTypes = {
+    progress: PropTypes.number,
+    color: PropTypes.string,
+    background: PropTypes.string,
+    height: PropTypes.number,
+    onLoaderFinished: PropTypes.func,
+    onProgressChange: PropTypes.func,
+    className: PropTypes.string,
+    onRef: PropTypes.func
+  }
 
-  add = value => {
+  static defaultProps = {
+    progress: 0,
+    color: '#f11946',
+    height: 3,
+    className: '',
+    background: ''
+  }
+
+  private mounted: boolean
+
+  public add = (value: number) => {
     this.setState({ progress: this.state.progress + value }, () => {
       this.onProgressChange()
     })
   }
 
-  onProgressChange = () => {
+  private onProgressChange = () => {
     if (this.props.onProgressChange)
       this.props.onProgressChange(this.state.progress)
 
     this.checkIfFull()
   }
 
-  decrease = value => {
+  public decrease = (value: number) => {
     this.setState({ progress: this.state.progress - value }, () => {
       this.onProgressChange()
     })
   }
 
-  randomInt(low, high) {
+  private randomInt(low: number, high: number) {
     return Math.floor(Math.random() * (high - low) + low)
   }
 
-  continousStart = startingValue => {
+  public continousStart = (startingValue: number) => {
     const random = startingValue || this.randomInt(20, 30)
     this.setState({ progress: random })
 
@@ -51,7 +90,7 @@ class LoadingBar extends Component {
     }, 1000)
   }
 
-  staticStart = startingValue => {
+  public staticStart = (startingValue: number) => {
     const random = startingValue || this.randomInt(30, 50)
 
     this.setState({ progress: random }, () => {
@@ -59,13 +98,13 @@ class LoadingBar extends Component {
     })
   }
 
-  complete = () => {
+  public complete = () => {
     this.setState({ progress: 100 }, () => {
       this.onProgressChange()
     })
   }
 
-  onLoaderFinished = () => {
+  private onLoaderFinished = () => {
     if (this.props.onLoaderFinished) this.props.onLoaderFinished()
 
     this.setState({ progress: 0 }, () => {
@@ -77,7 +116,7 @@ class LoadingBar extends Component {
     const { className, height } = this.props
     const { show, full } = this.state
     return (
-      <div style={{ height: height }}>
+      <div style={{ height }}>
         {show ? (
           <div
             className={
@@ -94,7 +133,7 @@ class LoadingBar extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IProps) {
     // Watching Progress Changes
     if (nextProps.progress !== this.props.progress) {
       this.setState({ progress: nextProps.progress }, () => {
@@ -119,7 +158,7 @@ class LoadingBar extends Component {
     if (this.props.onRef) this.props.onRef(undefined)
   }
   // Check whether the progress is full
-  checkIfFull = () => {
+  private checkIfFull = () => {
     if (!this.mounted) return false
 
     if (this.state.progress >= 100) {
@@ -131,8 +170,7 @@ class LoadingBar extends Component {
         if (!this.mounted) return false
         // animate when element removed
         this.setState({
-          full: true,
-          myError: false
+          full: true
         })
 
         setTimeout(() => {
@@ -179,22 +217,4 @@ class LoadingBar extends Component {
   }
 }
 
-LoadingBar.defaultProps = {
-  progress: 0,
-  color: '#f11946',
-  height: 3,
-  className: '',
-  background: ''
-}
-
-LoadingBar.propTypes = {
-  progress: PropTypes.number,
-  color: PropTypes.string,
-  background: PropTypes.string,
-  height: PropTypes.number,
-  onLoaderFinished: PropTypes.func,
-  onProgressChange: PropTypes.func,
-  className: PropTypes.string,
-  onRef: PropTypes.func
-}
 export default LoadingBar

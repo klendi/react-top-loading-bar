@@ -1,6 +1,6 @@
 {
   "name": "react-top-loading-bar",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A very simple, highly customisable react top loader component.",
   "author": {
     "name": "Klendi Gocci",
@@ -86,9 +86,16 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-url": "^1.4.0"
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-url": "^1.4.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.3"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4"
+  }
 }
