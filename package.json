@@ -51,7 +51,7 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "npm run build",
-    "predeploy": "cd example && npm install && npm run build",
+    "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
@@ -61,6 +61,8 @@
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
+    "@types/react": "^16.9.1",
+    "@types/react-dom": "^16.8.5",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -94,8 +96,5 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4"
-  }
+  "dependencies": {}
 }
