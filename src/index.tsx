@@ -73,7 +73,25 @@ class LoadingBar extends Component<IProps, IState> {
     return Math.floor(Math.random() * (high - low) + low)
   }
 
+   /** @deprecated this method contains a typo, use continuousStart */
   public continousStart = (startingValue: number) => {
+    const random = startingValue || this.randomInt(20, 30)
+    this.setState({ progress: random })
+
+    const interval = setInterval(() => {
+      if (this.state.progress < 90) {
+        const random = this.randomInt(2, 10)
+        if (!this.mounted) return false
+        this.setState({ progress: this.state.progress + random }, () => {
+          this.onProgressChange()
+        })
+      } else {
+        clearInterval(interval)
+      }
+    }, 1000)
+  }
+
+  public continuousStart = (startingValue: number) => {
     const random = startingValue || this.randomInt(20, 30)
     this.setState({ progress: random })
 

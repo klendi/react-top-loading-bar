@@ -48,8 +48,8 @@ export default class ExampleWithRefs extends Component {
           color='#f11946'
           onRef={ref => (this.LoadingBar = ref)}
         />
-        <button onClick={() => this.LoadingBar.continousStart()}>
-          Start Continous Bar Loading
+        <button onClick={() => this.LoadingBar.continuousStart()}>
+          Start Continuous Bar Loading
         </button>
         <button onClick={() => this.LoadingBar.staticStart()}>
           Start Static Bar Loading
@@ -118,7 +118,8 @@ export default class App extends Component {
 | ----------------------------- | :---------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | add(value)                    |      Number       | Adds a value to the loading indicator.                                                                                                                                                                                        |
 | decrease(value)               |      Number       | Decreases a value to the loading indicator.                                                                                                                                                                                   |
-| continousStart(startingValue) | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
+| continousStart(startingValue) [typo - deprecated, use continuousStart] | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
+| continuousStart(startingValue) | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
 | staticStart(startingValue)    | Number (optional) | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                      |
 | complete()                    |                   | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                            |
 
