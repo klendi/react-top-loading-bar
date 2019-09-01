@@ -1,50 +1,50 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import LoadingBar from 'react-top-loading-bar'
+import LoadingBar from 'react-top-loading-bar';
 
 export default class App extends Component {
   state = {
     barColor: '#f11946',
     color: 'red'
-  }
+  };
 
   randomInt(min, max) {
-    var i = (Math.random() * 32768) >>> 0
-    return (i % (min - max)) + min
+    var i = (Math.random() * 32768) >>> 0;
+    return (i % (min - max)) + min;
   }
 
   changeColor = () => {
-    const colors = ['red', 'purple', 'green', 'teal', 'orange', 'blue']
-    let i = this.randomInt(0, colors.length)
+    const colors = ['red', 'purple', 'green', 'teal', 'orange', 'blue'];
+    let i = this.randomInt(0, colors.length);
 
-    const color = colors[i]
+    const color = colors[i];
 
-    let barColor = ''
+    let barColor = '';
     switch (color) {
       case 'red':
-        barColor = '#f11946'
-        break
+        barColor = '#f11946';
+        break;
       case 'purple':
-        barColor = '#8800ff'
-        break
+        barColor = '#8800ff';
+        break;
       case 'green':
-        barColor = '#28b485'
-        break
+        barColor = '#28b485';
+        break;
       case 'teal':
-        barColor = '#00ffe2'
-        break
+        barColor = '#00ffe2';
+        break;
       case 'orange':
-        barColor = '#ff7c05'
-        break
+        barColor = '#ff7c05';
+        break;
       case 'blue':
-        barColor = '#2998ff'
-        break
+        barColor = '#2998ff';
+        break;
 
       default:
-        break
+        break;
     }
-    this.setState({ barColor, color })
-  }
+    this.setState({ barColor, color });
+  };
 
   render() {
     return (
@@ -154,6 +154,6 @@ export default class App extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

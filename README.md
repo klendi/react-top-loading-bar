@@ -35,9 +35,9 @@ https://unpkg.com/react-top-loading-bar
 ### With ref
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import LoadingBar from 'react-top-loading-bar'
+import LoadingBar from 'react-top-loading-bar';
 
 export default class ExampleWithRefs extends Component {
   render() {
@@ -59,7 +59,7 @@ export default class ExampleWithRefs extends Component {
         <button onClick={() => this.LoadingBar.add(10)}>Add 10</button>
         <button onClick={() => this.LoadingBar.add(10)}>Add 30</button>
       </div>
-    )
+    );
   }
 }
 ```
@@ -67,28 +67,28 @@ export default class ExampleWithRefs extends Component {
 ### With state
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import LoadingBar from 'react-top-loading-bar'
+import LoadingBar from 'react-top-loading-bar';
 
 export default class App extends Component {
   state = {
     loadingBarProgress: 0
-  }
+  };
 
   add = value => {
     this.setState({
       loadingBarProgress: this.state.loadingBarProgress + value
-    })
-  }
+    });
+  };
 
   complete = () => {
-    this.setState({ loadingBarProgress: 100 })
-  }
+    this.setState({ loadingBarProgress: 100 });
+  };
 
   onLoaderFinished = () => {
-    this.setState({ loadingBarProgress: 0 })
-  }
+    this.setState({ loadingBarProgress: 0 });
+  };
 
   render() {
     return (
@@ -103,7 +103,7 @@ export default class App extends Component {
         <button onClick={() => this.add(30)}>Add 30</button>
         <button onClick={() => this.complete()}>Complete</button>
       </div>
-    )
+    );
   }
 }
 ```
@@ -124,16 +124,16 @@ export default class App extends Component {
 
 ## Properties
 
-| Property         | Type     | Default | Description                                                                                                                             |
-| :--------------- | :------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| progress         | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                                   |
-| color            | String   | `red`   | The color of the loading bar, color take values like css property `background-color:` do, for example `red`, `#000` `rgb(255,0,0)` etc. |
-| background       | String   |         | The `background` css property of the bar. Can be used for gradients, images, etc.                                                       |
-| height           | Number   | `3`     | The height of the loading bar in pixels.                                                                                                |
-| className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                                   |
-| onLoaderFinished | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                               |
-| onProgressChange | Function |         | This is called each time loading bar value changes.                                                                                     |
-| onRef            | Function |         | This is used to access built in methods                                                                                                 |
+| Property               | Type     | Default | Description                                                                                                                                    |
+| :--------------------- | :------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| progress               | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                                          |
+| color                  | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc.              |
+| background(depreacted) | String   |         | (Please use color since it now haves the same functionality) The `background` css property of the bar. Can be used for gradients, images, etc. |
+| height                 | Number   | `3`     | The height of the loading bar in pixels.                                                                                                       |
+| className              | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                                          |
+| onLoaderFinished       | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                                      |
+| onProgressChange       | Function |         | This is called each time loading bar value changes.                                                                                            |
+| onRef                  | Function |         | This is used to access built in methods                                                                                                        |
 
 ## Projects using react-top-loading-bar
 
