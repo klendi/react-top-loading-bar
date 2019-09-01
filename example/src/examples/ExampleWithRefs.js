@@ -4,7 +4,7 @@ import LoadingBar from 'react-top-loading-bar'
 
 export default class ExampleWithRefs extends Component {
   startFetch = () => {
-    this.LoadingBar.startContinous()
+    this.LoadingBar.continuousStart()
   }
 
   onFinishFetch = () => {
@@ -16,8 +16,8 @@ export default class ExampleWithRefs extends Component {
       <div>
         <LoadingBar onRef={ref => (this.LoadingBar = ref)} />
 
-        <button onClick={() => this.LoadingBar.continousStart()}>
-          Start Continous Bar
+        <button onClick={() => this.LoadingBar.continuousStart()}>
+          Start Continuous Bar
         </button>
         <button onClick={() => this.LoadingBar.staticStart()}>
           Start Static Bar

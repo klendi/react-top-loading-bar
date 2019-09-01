@@ -70,9 +70,9 @@ export default class App extends Component {
         <div className='buttons-group'>
           <button
             className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.continousStart()}
+            onClick={() => this.LoadingBar.continuousStart()}
           >
-            Start Continous Loading Bar
+            Start Continuous Loading Bar
           </button>
           <button
             className={'btn ' + this.state.color}
