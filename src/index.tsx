@@ -82,6 +82,7 @@ class LoadingBar extends Component<IProps, IState> {
     }
 
     const random = startingValue || this.randomInt(20, 30);
+    this.setState({ progress: random });
 
     const interval = setInterval(() => {
       if (this.state.progress < 90) {
@@ -95,7 +96,7 @@ class LoadingBar extends Component<IProps, IState> {
       }
     }, 1000);
 
-    this.setState({ progress: random, interval });
+    this.setState({ interval });
   };
 
   public continuousStart = (startingValue: number) => {
@@ -103,6 +104,7 @@ class LoadingBar extends Component<IProps, IState> {
       clearInterval(this.state.interval);
     }
     const random = startingValue || this.randomInt(20, 30);
+    this.setState({ progress: random });
 
     const interval = setInterval(() => {
       if (this.state.progress < 90) {
@@ -115,7 +117,7 @@ class LoadingBar extends Component<IProps, IState> {
         clearInterval(interval);
       }
     }, 1000);
-    this.setState({ progress: random, interval });
+    this.setState({ interval });
   };
 
   public staticStart = (startingValue: number) => {
@@ -141,11 +143,7 @@ class LoadingBar extends Component<IProps, IState> {
   private onLoaderFinished = () => {
     if (this.props.onLoaderFinished) this.props.onLoaderFinished();
 
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
-    }
-
-    this.setState({ progress: 0, interval: null }, () => {
+    this.setState({ progress: 0 }, () => {
       this.onProgressChange();
     });
   };
