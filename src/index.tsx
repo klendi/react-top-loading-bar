@@ -9,6 +9,7 @@ type IState = {
   full: boolean;
   progress: number;
   wait: boolean;
+  interval: number;
 };
 
 type IProps = {
@@ -27,7 +28,8 @@ class LoadingBar extends Component<IProps, IState> {
     show: true,
     full: false,
     progress: 0,
-    wait: false
+    wait: false,
+    interval: null
   };
   static propTypes = {
     progress: PropTypes.number,
@@ -75,6 +77,10 @@ class LoadingBar extends Component<IProps, IState> {
 
   /** @deprecated this method contains a typo, use continuousStart */
   public continousStart = (startingValue: number) => {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
+
     const random = startingValue || this.randomInt(20, 30);
     this.setState({ progress: random });
 
@@ -89,9 +95,14 @@ class LoadingBar extends Component<IProps, IState> {
         clearInterval(interval);
       }
     }, 1000);
+
+    this.setState({ interval });
   };
 
   public continuousStart = (startingValue: number) => {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
     const random = startingValue || this.randomInt(20, 30);
     this.setState({ progress: random });
 
@@ -106,18 +117,25 @@ class LoadingBar extends Component<IProps, IState> {
         clearInterval(interval);
       }
     }, 1000);
+    this.setState({ interval });
   };
 
   public staticStart = (startingValue: number) => {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
     const random = startingValue || this.randomInt(30, 50);
 
-    this.setState({ progress: random }, () => {
+    this.setState({ progress: random, interval: null }, () => {
       this.onProgressChange();
     });
   };
 
   public complete = () => {
-    this.setState({ progress: 100 }, () => {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
+    this.setState({ progress: 100, interval: null }, () => {
       this.onProgressChange();
     });
   };
