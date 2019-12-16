@@ -129,7 +129,7 @@ export default class App extends Component {
 | :--------------------- | :------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------- |
 | progress               | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                                          |
 | color                  | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc.              |
-| background(depreacted) | String   |         | (Please use color since it now haves the same functionality) The `background` css property of the bar. Can be used for gradients, images, etc. |
+| background(deprecated) | String   |         | (Please use color since it now haves the same functionality) The `background` css property of the bar. Can be used for gradients, images, etc. |
 | height                 | Number   | `3`     | The height of the loading bar in pixels.                                                                                                       |
 | className              | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                                          |
 | onLoaderFinished       | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                                      |
