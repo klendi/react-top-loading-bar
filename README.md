@@ -57,7 +57,7 @@ export default class ExampleWithRefs extends Component {
         <button onClick={() => this.LoadingBar.complete()}>Complete</button>
         <br />
         <button onClick={() => this.LoadingBar.add(10)}>Add 10</button>
-        <button onClick={() => this.LoadingBar.add(10)}>Add 30</button>
+        <button onClick={() => this.LoadingBar.add(30)}>Add 30</button>
       </div>
     );
   }
