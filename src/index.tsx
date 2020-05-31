@@ -10,7 +10,7 @@ import { useInterval } from './useInterval'
 import { randomInt } from './utils'
 
 type IProps = {
-  progress: number
+  progress?: number
   color?: string
   shadow?: boolean
   background?: string
@@ -20,13 +20,12 @@ type IProps = {
   loaderSpeed?: number
   transitionTime?: number
   waitingTime?: number
-  onRef?: Function
 }
 
 export const LoadingBar = forwardRef(
   (
     {
-      progress = 0,
+      progress,
       height = 2,
       className = '',
       color = 'red',
@@ -39,14 +38,18 @@ export const LoadingBar = forwardRef(
     }: IProps,
     ref
   ) => {
-    //@ts-ignore
-    const [continousInterval, setContinousInterval] = useState<NodeJS.Timeout>()
     const [localProgress, localProgressSet] = useState<number>(0)
     const [pressedContinuous, setPressedContinuous] = useState<{
       active: boolean
       startingValue: number
       refreshRate: number
     }>({ active: false, startingValue: 20, refreshRate: 1000 })
+    const [usingProps, setUsingProps] = useState(false)
+
+    const [pressedStaticStart, setStaticStartPressed] = useState<{
+      active: boolean
+      value: number
+    }>({ active: false, value: 20 })
 
     const initialLoaderStyle: CSSProperties = {
       height: '100%',
@@ -84,19 +87,47 @@ export const LoadingBar = forwardRef(
 
     useImperativeHandle(ref, () => ({
       continuousStart(startingValue: number, refreshRate: number = 1000) {
+        if (pressedStaticStart.active) return
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
+
+        const val = startingValue || randomInt(10, 20)
         setPressedContinuous({
           active: true,
           refreshRate,
           startingValue,
         })
+        localProgressSet(val)
+        checkIfFull(val)
       },
-      staticStart(startingValue: number = 40) {
-        const random = startingValue || randomInt(30, 50)
-        localProgressSet(random)
-        checkIfFull(localProgress)
+      staticStart(startingValue: number) {
+        if (pressedContinuous.active) return
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
+
+        const val = startingValue || randomInt(30, 50)
+        setStaticStartPressed({
+          active: true,
+          value: val,
+        })
+        localProgressSet(val)
+        checkIfFull(val)
       },
       complete() {
-        console.log('This pressed')
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
         localProgressSet(100)
         checkIfFull(100)
       },
@@ -104,20 +135,22 @@ export const LoadingBar = forwardRef(
 
     useEffect(() => {
       if (ref) {
-        console.log('We using refs')
+        if (ref && progress !== undefined) {
+          console.warn(
+            'react-top-loading-bar: You can\'t use both controlling by props and ref methods to control the bar! Please use only props or only ref methods! Ref methods will override props if "ref" property is available.'
+          )
+          return
+        }
         checkIfFull(localProgress)
+        setUsingProps(false)
       } else {
-        console.log('We using props')
-        checkIfFull(progress)
-      }
+        if (progress) checkIfFull(progress)
 
-      return () => {
-        if (continousInterval) clearInterval(continousInterval)
+        setUsingProps(true)
       }
     }, [progress])
 
     const checkIfFull = (_progress: number) => {
-      console.log('CHECK IF FULL', _progress)
       if (_progress >= 100) {
         //now it should wait a little bit
         loaderStyleSet({
@@ -143,6 +176,7 @@ export const LoadingBar = forwardRef(
           setTimeout(() => {
             //here we wait for it to fade
             if (pressedContinuous.active) {
+              //if we have continous loader just ending, we kill it and reset it
               setPressedContinuous({
                 ...pressedContinuous,
                 active: false,
@@ -150,11 +184,20 @@ export const LoadingBar = forwardRef(
               localProgressSet(0)
               checkIfFull(0)
             }
+
+            if (pressedStaticStart.active) {
+              setStaticStartPressed({
+                ...pressedStaticStart,
+                active: false,
+              })
+              localProgressSet(0)
+              checkIfFull(0)
+            }
+
             if (onLoaderFinished) onLoaderFinished()
           }, transitionTime)
         }, waitingTime)
       } else {
-        console.log('Progress in here is ', _progress)
         loaderStyleSet((_loaderStyle) => {
           return {
             ..._loaderStyle,
@@ -176,7 +219,7 @@ export const LoadingBar = forwardRef(
 
     useInterval(
       () => {
-        const random = pressedContinuous.startingValue || randomInt(10, 20)
+        const random = randomInt(10, 20)
 
         if (localProgress + random < 90) {
           localProgressSet(localProgress + random)
