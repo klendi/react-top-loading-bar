@@ -12,3 +12,135 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.buttons-group {
+  padding-top: 8rem;
+  text-align: center;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  outline: none;
+  border: none;
+  border-radius: 100rem;
+  font-size: 16px;
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a {
+  font-size: 16px;
+  text-decoration: none;
+  color: white;
+}
+
+.btn:active,
+a:active {
+  transform: scale(1.03) translateY(3px);
+}
+
+.btn.red {
+  color: white;
+  background-color: #f11946;
+  box-shadow: 0 0.5rem 2rem rgba(241, 25, 70, 0.5);
+}
+
+.btn.red:hover {
+  background-color: #be1737;
+}
+
+.btn.blue {
+  color: white;
+  background-color: #2998ff;
+  box-shadow: 0 0.5rem 2rem rgba(41, 152, 255, 0.5);
+}
+
+.btn.blue:hover {
+  background-color: #1d7acb;
+}
+
+.btn.purple {
+  color: white;
+  background-color: #8800ff;
+  box-shadow: 0 0.5rem 2rem rgba(136, 0, 255, 0.5);
+}
+
+.btn.purple:hover {
+  background-color: #6800c5;
+}
+
+.btn.green {
+  color: white;
+  background-color: #28b485;
+  box-shadow: 0 0.5rem 2rem rgba(40, 180, 133, 0.5);
+}
+
+.btn.green:hover {
+  background-color: #23986f;
+}
+
+.btn.teal {
+  color: white;
+  background-color: #00cfe2;
+  box-shadow: 0 0.5rem 2rem rgba(0, 255, 226, 0.5);
+}
+
+.btn.teal:hover {
+  background-color: #00bcce;
+}
+
+.btn.orange {
+  color: white;
+  background-color: #ff7c05;
+  box-shadow: 0 0.5rem 2rem rgba(255, 86, 0, 0.5);
+}
+
+.btn.orange:hover {
+  background-color: #e66b04;
+}
+
+.header {
+  text-align: center;
+  font-weight: 100;
+  font-size: 5rem;
+  margin-top: 3rem;
+}
+
+.text-container {
+  text-align: center;
+  margin-bottom: -5rem;
+}
+
+.package-install-text {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  color: #222;
+  font-weight: 400;
+  margin: 1em;
+  /* letter-spacing: 1.1px; */
+  /* box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1); */
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.package-install-text:hover {
+  /* transform: scale(1.1); */
+  background: rgba(0, 255, 64, 0.2);
+  border: 1px solid rgba(0, 173, 43, 0.4);
+}
+
+.github-buttons {
+  margin-top: 2rem;
+}
