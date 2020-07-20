@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {
+  // eslint-disable-next-line no-unused-vars
   CSSProperties,
   useEffect,
   useState,
@@ -15,14 +16,14 @@ type IProps = {
   shadow?: boolean
   background?: string
   height?: number
-  onLoaderFinished?: Function
+  onLoaderFinished?: () => {}
   className?: string
   loaderSpeed?: number
   transitionTime?: number
   waitingTime?: number
 }
 
-export const LoadingBar = forwardRef(
+const LoadingBar = forwardRef(
   (
     {
       progress,
@@ -69,13 +70,14 @@ export const LoadingBar = forwardRef(
     }
 
     const initialShadowStyles: CSSProperties = {
-      boxShadow: `0 0 10px ${color}, 0 0 5px ${color}`,
+      boxShadow: `0 0 10px ${color}, 0 0 10px ${color}`,
       width: '5%',
       opacity: 1,
       position: 'absolute',
       height: '100%',
       transition: `all ${loaderSpeed}ms ease`,
       transform: 'rotate(3deg) translate(0px, -4px)',
+      left: '-10rem',
     }
 
     const [loaderStyle, loaderStyleSet] = useState<CSSProperties>(
@@ -134,6 +136,18 @@ export const LoadingBar = forwardRef(
     }))
 
     useEffect(() => {
+      loaderStyleSet({
+        ...loaderStyle,
+        background: color,
+      })
+
+      shadowStyleSet({
+        ...shadowStyle,
+        boxShadow: `0 0 10px ${color}, 0 0 5px ${color}`,
+      })
+    }, [color])
+
+    useEffect(() => {
       if (ref) {
         if (ref && progress !== undefined) {
           console.warn(
@@ -152,7 +166,7 @@ export const LoadingBar = forwardRef(
 
     const checkIfFull = (_progress: number) => {
       if (_progress >= 100) {
-        //now it should wait a little bit
+        // now it should wait a little bit
         loaderStyleSet({
           ...loaderStyle,
           width: '100%',
@@ -160,23 +174,24 @@ export const LoadingBar = forwardRef(
         if (shadow) {
           shadowStyleSet({
             ...shadowStyle,
-            left: _progress - 5.5 + '%',
+            left: _progress - 10 + '%',
           })
         }
 
         setTimeout(() => {
-          //now it can fade out
+          // now it can fade out
           loaderStyleSet({
             ...loaderStyle,
             opacity: 0,
             width: '100%',
-            transition: `opacity ${transitionTime}ms ease-out`,
+            transition: `all ${transitionTime}ms ease-out`,
+            color: color,
           })
 
           setTimeout(() => {
-            //here we wait for it to fade
+            // here we wait for it to fade
             if (pressedContinuous.active) {
-              //if we have continous loader just ending, we kill it and reset it
+              // if we have continous loader just ending, we kill it and reset it
               setPressedContinuous({
                 ...pressedContinuous,
                 active: false,
@@ -195,6 +210,8 @@ export const LoadingBar = forwardRef(
             }
 
             if (onLoaderFinished) onLoaderFinished()
+            localProgressSet(0)
+            checkIfFull(0)
           }, transitionTime)
         }, waitingTime)
       } else {
@@ -238,3 +255,5 @@ export const LoadingBar = forwardRef(
     )
   }
 )
+
+export default LoadingBar

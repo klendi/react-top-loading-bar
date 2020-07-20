@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react'
 
-import { LoadingBar } from 'react-top-loading-bar'
-import 'react-top-loading-bar/dist/index.css'
+import LoadingBar from 'react-top-loading-bar'
 import './index.css'
 import { changeColor } from './changeColor'
+import Highlight from 'react-highlight'
+
 
 const App = () => {
   const [progress, setProgress] = useState(0)
   const [barColor, setBarColor] = useState('#f11946')
   const [buttonsColor, setButtonsColor] = useState('red')
-  const ref = React.createRef()
+  const ref = useRef(null)
+  const [usingRef, setUsingRef] = useState(false)
 
   const saveToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -17,9 +19,19 @@ const App = () => {
     })
   }
 
+  const changeMode = refMode => {
+    if(refMode) {
+      setProgress(0)
+    }
+
+    setUsingRef(refMode)
+  }
+
   return (
     <div>
-      <LoadingBar color={barColor} ref={ref} />
+      {usingRef ? <LoadingBar color={barColor} ref={ref} shadow={true}/> :
+        <LoadingBar color={barColor} progress={progress} onLoaderFinished={() => setProgress(0)}/>}
+
       <div className='text-container'>
         <h1 className='header'>react-top-loading-bar</h1>
         <div className='inline'>
@@ -29,9 +41,9 @@ const App = () => {
           >
             npm i react-top-loading-bar
           </code>
-          <br />
+          <br/>
           or
-          <br />
+          <br/>
           <code
             className='package-install-text'
             onClick={() => saveToClipboard('yarn add react-top-loading-bar')}
@@ -41,45 +53,57 @@ const App = () => {
         </div>
       </div>
       <div className='buttons-group'>
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => ref.current.continuousStart()}
-        >
-          Start Continuous Loading Bar
-        </button>
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => ref.current.staticStart()}
-        >
-          Start Static Loading Bar
-        </button>
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => ref.current.complete()}
-        >
-          Complete
-        </button>
-        <br />
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => setProgress(progress + 10)}
-        >
-          Add 10%
-        </button>
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => setProgress(progress + 30)}
-        >
-          Add 30%
-        </button>
-        <button
-          className={'btn ' + buttonsColor}
-          onClick={() => setProgress(progress + 50)}
-        >
-          Add 50%
-        </button>
+        <Highlight language="javascript" className="code-highlighter">
+          {usingRef ? `const ref = useRef(null);\n<LoadingBar color={barColor} ref={ref} />\nref.current.continuousStart()` : `const [progress,setProgress] = useState(0);\n<LoadingBar color={barColor} progress={progress}
+    onLoaderFinished={() => setProgress(0)} />`}
+        </Highlight>
+        <br/>
+        {usingRef ? <div>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.continuousStart()}
+            >
+              Start Continuous Loading Bar
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.staticStart()}
+            >
+              Start Static Loading Bar
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.complete()}
+            >
+              Complete
+            </button>
+            <br/>
+          </div> :
+          <div>
 
-        <br />
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 10)}
+            >
+              Add 10%
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 30)}
+            >
+              Add 30%
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 50)}
+            >
+              Add 50%
+            </button>
+
+            <br/>
+          </div>
+        }
+
         <button
           className={'btn ' + buttonsColor}
           onClick={() => {
@@ -90,35 +114,31 @@ const App = () => {
         >
           Change Color
         </button>
+        <button
+          className={'btn ' + buttonsColor}
+          onClick={() => changeMode(!usingRef)}
+        >
+          Change to {usingRef ? 'State' : 'Refs'} Mode
+        </button>
         <a
           className={'btn ' + buttonsColor}
           target='_blank'
           rel='noopener noreferrer'
-          href='https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/'
+          href={ usingRef ? 'https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/exampleWithRef.js' : 'https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/exampleWithState.js'}
         >
           Example
         </a>
+        <br/>
+        <br/>
         <div className='github-buttons'>
-          <a
-            className='github-button'
-            href='https://github.com/klendi/react-top-loading-bar'
-            data-size='large'
-            data-show-count='true'
-            aria-label='Star klendi/react-top-loading-bar on GitHub'
-          >
-            Star
-          </a>{' '}
-          <a
-            className='github-button'
-            href='https://github.com/klendi'
-            data-size='large'
-            data-show-count='true'
-            aria-label='Follow @klendi on GitHub'
-          >
-            Follow @klendi
-          </a>
+          <a className="github-button" href="https://github.com/klendi/react-top-loading-bar"
+             data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+             data-show-count="true" aria-label="Star klendi/react-top-loading-bar on GitHub">Star</a>{' '}
+          <a className="github-button" href="https://github.com/klendi"
+             data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+             data-show-count="true" aria-label="Follow @klendi on GitHub">Follow @klendi</a>
         </div>
-        <br />
+        <br/>
         <div>
           Made with ❤️ by{' '}
           <a

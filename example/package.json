@@ -6,6 +6,7 @@
   "dependencies": {
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-highlight": "^0.12.0",
     "react-scripts": "file:../node_modules/react-scripts",
     "react-top-loading-bar": "file:.."
   },
