@@ -3,22 +3,39 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #b4b4b4;
+  background: #0a0a0a;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
   font-family: 'Roboto', sans-serif;
 }
 
 .buttons-group {
-  padding-top: 8rem;
+  padding-top: 6rem;
   text-align: center;
 }
 
 .btn {
   padding: 1rem 2rem;
-  margin: .5rem;
+  margin: 0.5rem;
   outline: none;
   border: none;
   border-radius: 100rem;
   font-size: 16px;
-  transition: all .1s ease-in;
+  transition: all 0.1s ease-in;
   cursor: pointer;
   text-decoration: none;
 }
@@ -29,14 +46,15 @@ a {
   color: white;
 }
 
-.btn:active, a:active {
+.btn:active,
+a:active {
   transform: scale(1.03) translateY(3px);
 }
 
 .btn.red {
   color: white;
   background-color: #f11946;
-  box-shadow: 0 .5rem 2rem rgba(241, 25, 70, .5);
+  box-shadow: 0 0.5rem 2rem rgba(241, 25, 70, 0.5);
 }
 
 .btn.red:hover {
@@ -46,7 +64,7 @@ a {
 .btn.blue {
   color: white;
   background-color: #2998ff;
-  box-shadow: 0 .5rem 2rem rgba(41, 152, 255, .5);
+  box-shadow: 0 0.5rem 2rem rgba(41, 152, 255, 0.5);
 }
 
 .btn.blue:hover {
@@ -56,7 +74,7 @@ a {
 .btn.purple {
   color: white;
   background-color: #8800ff;
-  box-shadow: 0 .5rem 2rem rgba(136, 0, 255, .5);
+  box-shadow: 0 0.5rem 2rem rgba(136, 0, 255, 0.5);
 }
 
 .btn.purple:hover {
@@ -66,7 +84,7 @@ a {
 .btn.green {
   color: white;
   background-color: #28b485;
-  box-shadow: 0 .5rem 2rem rgba(40, 180, 133, .5);
+  box-shadow: 0 0.5rem 2rem rgba(40, 180, 133, 0.5);
 }
 
 .btn.green:hover {
@@ -75,8 +93,8 @@ a {
 
 .btn.teal {
   color: white;
-  background-color: #00cfe2;
-  box-shadow: 0 .5rem 2rem rgba(0, 255, 226, .5);
+  background-color: #0095a2;
+  box-shadow: 0 0.5rem 2rem rgba(0, 255, 226, 0.5);
 }
 
 .btn.teal:hover {
@@ -86,7 +104,7 @@ a {
 .btn.orange {
   color: white;
   background-color: #ff7c05;
-  box-shadow: 0 .5rem 2rem rgba(255, 86, 0, .5);
+  box-shadow: 0 0.5rem 2rem rgba(255, 86, 0, 0.5);
 }
 
 .btn.orange:hover {
@@ -96,25 +114,144 @@ a {
 .header {
   text-align: center;
   font-weight: 100;
-  font-size: 5rem;
-  margin-top: 3rem;
+  font-size: 4rem;
+  margin-top: 1rem;
 }
 
 .text-container {
   text-align: center;
-  margin-bottom: -4rem;
+  margin-bottom: -5rem;
 }
 
 .package-install-text {
   display: inline-block;
   padding: 1rem 2rem;
   border-radius: 50px;
-  color: #222;
+  color: #d6d6d6;
   font-weight: 400;
-  letter-spacing: 1.4px;
-  background-color: #e0e2e4;
+  margin: 1em;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.package-install-text:hover {
+  background: rgba(0, 255, 64, 0.2);
+  border: 1px solid rgba(0, 173, 43, 0.4);
 }
 
 .github-buttons {
   margin-top: 2rem;
+}
+
+.btn.disabled {
+  background: #c7c7c7;
+  box-shadow: none;
+}
+
+.btn:hover.disabled {
+  background: #c7c7c7;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+.code-highlighter {
+  border-radius: 5px;
+  display: inline-block;
 }

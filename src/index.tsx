@@ -1,260 +1,259 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-// @ts-ignore
-import styles from './styles.css';
-
-type IState = {
-  show: boolean;
-  full: boolean;
-  progress: number;
-  wait: boolean;
-  interval: number;
-};
+import * as React from 'react'
+import {
+  // eslint-disable-next-line no-unused-vars
+  CSSProperties,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from 'react'
+import { useInterval } from './useInterval'
+import { randomInt } from './utils'
 
 type IProps = {
-  progress?: number;
-  color?: string;
-  background?: string;
-  height?: number;
-  onLoaderFinished?: Function;
-  onProgressChange?: Function;
-  className?: string;
-  onRef?: Function;
-};
-
-class LoadingBar extends Component<IProps, IState> {
-  state = {
-    show: true,
-    full: false,
-    progress: 0,
-    wait: false,
-    interval: null
-  };
-  static propTypes = {
-    progress: PropTypes.number,
-    color: PropTypes.string,
-    background: PropTypes.string,
-    height: PropTypes.number,
-    onLoaderFinished: PropTypes.func,
-    onProgressChange: PropTypes.func,
-    className: PropTypes.string,
-    onRef: PropTypes.func
-  };
-
-  static defaultProps = {
-    progress: 0,
-    color: '#f11946',
-    height: 3,
-    className: '',
-    background: ''
-  };
-
-  private mounted: boolean;
-
-  public add = (value: number) => {
-    this.setState({ progress: this.state.progress + value }, () => {
-      this.onProgressChange();
-    });
-  };
-
-  private onProgressChange = () => {
-    if (this.props.onProgressChange)
-      this.props.onProgressChange(this.state.progress);
-
-    this.checkIfFull();
-  };
-
-  public decrease = (value: number) => {
-    this.setState({ progress: this.state.progress - value }, () => {
-      this.onProgressChange();
-    });
-  };
-
-  private randomInt(low: number, high: number) {
-    return Math.floor(Math.random() * (high - low) + low);
-  }
-
-  /** @deprecated this method contains a typo, use continuousStart */
-  public continousStart = (startingValue: number) => {
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
-    }
-
-    const random = startingValue || this.randomInt(20, 30);
-    this.setState({ progress: random });
-
-    const interval = setInterval(() => {
-      if (this.state.progress < 90) {
-        const random = this.randomInt(2, 10);
-        if (!this.mounted) return false;
-        this.setState({ progress: this.state.progress + random }, () => {
-          this.onProgressChange();
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    this.setState({ interval });
-  };
-
-  public continuousStart = (startingValue: number) => {
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
-    }
-    const random = startingValue || this.randomInt(20, 30);
-    this.setState({ progress: random });
-
-    const interval = setInterval(() => {
-      if (this.state.progress < 90) {
-        const random = this.randomInt(2, 10);
-        if (!this.mounted) return false;
-        this.setState({ progress: this.state.progress + random }, () => {
-          this.onProgressChange();
-        });
-      } else {
-        clearInterval(interval);
-      }
-    }, 1000);
-    this.setState({ interval });
-  };
-
-  public staticStart = (startingValue: number) => {
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
-    }
-    const random = startingValue || this.randomInt(30, 50);
-
-    this.setState({ progress: random, interval: null }, () => {
-      this.onProgressChange();
-    });
-  };
-
-  public complete = () => {
-    if (this.state.interval) {
-      clearInterval(this.state.interval);
-    }
-    this.setState({ progress: 100, interval: null }, () => {
-      this.onProgressChange();
-    });
-  };
-
-  private onLoaderFinished = () => {
-    if (this.props.onLoaderFinished) this.props.onLoaderFinished();
-
-    this.setState({ progress: 0 }, () => {
-      this.onProgressChange();
-    });
-  };
-
-  render() {
-    const { className, height } = this.props;
-    const { show, full } = this.state;
-    return (
-      <div style={{ height }}>
-        {show ? (
-          <div
-            className={
-              styles['loading-bar'] +
-              ' ' +
-              (className || '') +
-              ' ' +
-              (full ? styles['loading-bar-full'] : '')
-            }
-            style={this.barStyle()}
-          />
-        ) : null}
-      </div>
-    );
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps: IProps) {
-    // Watching Progress Changes
-    if (nextProps.progress !== this.props.progress) {
-      this.setState({ progress: nextProps.progress }, () => {
-        if (this.props.onProgressChange != null) {
-          this.props.onProgressChange();
-        }
-        this.checkIfFull();
-      });
-    }
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    if (this.props.onRef) this.props.onRef(this);
-
-    if (this.state.progress !== this.props.progress) {
-      this.setState({ progress: this.props.progress });
-    }
-  }
-  componentWillUnmount() {
-    this.mounted = false;
-    if (this.props.onRef) this.props.onRef(undefined);
-  }
-  // Check whether the progress is full
-  private checkIfFull = () => {
-    if (!this.mounted) return false;
-
-    if (this.state.progress >= 100) {
-      // Prevent new progress change
-      this.setState({ wait: true });
-
-      // Start animate it
-      setTimeout(() => {
-        if (!this.mounted) return false;
-        // animate when element removed
-        this.setState({
-          full: true
-        });
-
-        setTimeout(() => {
-          if (!this.mounted) return false;
-          this.setState({
-            // remove bar element
-            show: false,
-            progress: 0,
-            wait: false
-          });
-
-          setTimeout(() => {
-            if (!this.mounted) return false;
-            this.setState({
-              // Show Bar
-              full: false,
-              show: true
-            });
-            this.onLoaderFinished();
-          });
-
-          // Duration to Waiting for hiding animation
-        }, 250);
-
-        // Duration is depend on css animation-duration of loading-bar
-      }, 700);
-    }
-  };
-
-  // apply width style to our element as inline style
-  private barStyle() {
-    // When loading bar still in progress
-    const { color, background } = this.props;
-    if (background || background !== '') {
-      console.warn(
-        "react-top-loading-bar: Please don't use background property as a property since it's deprecated. Please use 'color' since it now haves the same function as background."
-      );
-    }
-
-    if (!this.state.wait) {
-      return {
-        width: `${this.state.progress}%`,
-        background: background || color
-      };
-    } else {
-      return { width: '100%', background: background || color };
-    }
-  }
+  progress?: number
+  color?: string
+  shadow?: boolean
+  background?: string
+  height?: number
+  onLoaderFinished?: () => {}
+  className?: string
+  loaderSpeed?: number
+  transitionTime?: number
+  waitingTime?: number
 }
 
-export default LoadingBar;
+const LoadingBar = forwardRef(
+  (
+    {
+      progress,
+      height = 2,
+      className = '',
+      color = 'red',
+      background = 'transparent',
+      onLoaderFinished,
+      transitionTime = 300,
+      loaderSpeed = 500,
+      waitingTime = 1000,
+      shadow = true,
+    }: IProps,
+    ref
+  ) => {
+    const [localProgress, localProgressSet] = useState<number>(0)
+    const [pressedContinuous, setPressedContinuous] = useState<{
+      active: boolean
+      startingValue: number
+      refreshRate: number
+    }>({ active: false, startingValue: 20, refreshRate: 1000 })
+    const [usingProps, setUsingProps] = useState(false)
+
+    const [pressedStaticStart, setStaticStartPressed] = useState<{
+      active: boolean
+      value: number
+    }>({ active: false, value: 20 })
+
+    const initialLoaderStyle: CSSProperties = {
+      height: '100%',
+      background: color,
+      transition: `all ${loaderSpeed}ms ease`,
+      width: '0%',
+    }
+
+    const loaderContainerStyle: CSSProperties = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      height,
+      background,
+      zIndex: 99999999999,
+      width: 100 + '%',
+    }
+
+    const initialShadowStyles: CSSProperties = {
+      boxShadow: `0 0 10px ${color}, 0 0 10px ${color}`,
+      width: '5%',
+      opacity: 1,
+      position: 'absolute',
+      height: '100%',
+      transition: `all ${loaderSpeed}ms ease`,
+      transform: 'rotate(3deg) translate(0px, -4px)',
+      left: '-10rem',
+    }
+
+    const [loaderStyle, loaderStyleSet] = useState<CSSProperties>(
+      initialLoaderStyle
+    )
+    const [shadowStyle, shadowStyleSet] = useState<CSSProperties>(
+      initialShadowStyles
+    )
+
+    useImperativeHandle(ref, () => ({
+      continuousStart(startingValue: number, refreshRate: number = 1000) {
+        if (pressedStaticStart.active) return
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
+
+        const val = startingValue || randomInt(10, 20)
+        setPressedContinuous({
+          active: true,
+          refreshRate,
+          startingValue,
+        })
+        localProgressSet(val)
+        checkIfFull(val)
+      },
+      staticStart(startingValue: number) {
+        if (pressedContinuous.active) return
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
+
+        const val = startingValue || randomInt(30, 50)
+        setStaticStartPressed({
+          active: true,
+          value: val,
+        })
+        localProgressSet(val)
+        checkIfFull(val)
+      },
+      complete() {
+        if (usingProps) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!"
+          )
+          return
+        }
+        localProgressSet(100)
+        checkIfFull(100)
+      },
+    }))
+
+    useEffect(() => {
+      loaderStyleSet({
+        ...loaderStyle,
+        background: color,
+      })
+
+      shadowStyleSet({
+        ...shadowStyle,
+        boxShadow: `0 0 10px ${color}, 0 0 5px ${color}`,
+      })
+    }, [color])
+
+    useEffect(() => {
+      if (ref) {
+        if (ref && progress !== undefined) {
+          console.warn(
+            'react-top-loading-bar: You can\'t use both controlling by props and ref methods to control the bar! Please use only props or only ref methods! Ref methods will override props if "ref" property is available.'
+          )
+          return
+        }
+        checkIfFull(localProgress)
+        setUsingProps(false)
+      } else {
+        if (progress) checkIfFull(progress)
+
+        setUsingProps(true)
+      }
+    }, [progress])
+
+    const checkIfFull = (_progress: number) => {
+      if (_progress >= 100) {
+        // now it should wait a little bit
+        loaderStyleSet({
+          ...loaderStyle,
+          width: '100%',
+        })
+        if (shadow) {
+          shadowStyleSet({
+            ...shadowStyle,
+            left: _progress - 10 + '%',
+          })
+        }
+
+        setTimeout(() => {
+          // now it can fade out
+          loaderStyleSet({
+            ...loaderStyle,
+            opacity: 0,
+            width: '100%',
+            transition: `all ${transitionTime}ms ease-out`,
+            color: color,
+          })
+
+          setTimeout(() => {
+            // here we wait for it to fade
+            if (pressedContinuous.active) {
+              // if we have continous loader just ending, we kill it and reset it
+              setPressedContinuous({
+                ...pressedContinuous,
+                active: false,
+              })
+              localProgressSet(0)
+              checkIfFull(0)
+            }
+
+            if (pressedStaticStart.active) {
+              setStaticStartPressed({
+                ...pressedStaticStart,
+                active: false,
+              })
+              localProgressSet(0)
+              checkIfFull(0)
+            }
+
+            if (onLoaderFinished) onLoaderFinished()
+            localProgressSet(0)
+            checkIfFull(0)
+          }, transitionTime)
+        }, waitingTime)
+      } else {
+        loaderStyleSet((_loaderStyle) => {
+          return {
+            ..._loaderStyle,
+            width: _progress + '%',
+            opacity: 1,
+            transition: _progress > 0 ? `all ${loaderSpeed}ms ease` : '',
+          }
+        })
+
+        if (shadow) {
+          shadowStyleSet({
+            ...shadowStyle,
+            left: _progress - 5.5 + '%',
+            transition: _progress > 0 ? `all ${loaderSpeed}ms ease` : '',
+          })
+        }
+      }
+    }
+
+    useInterval(
+      () => {
+        const random = randomInt(10, 20)
+
+        if (localProgress + random < 90) {
+          localProgressSet(localProgress + random)
+          checkIfFull(localProgress + random)
+        }
+      },
+      pressedContinuous.active ? pressedContinuous.refreshRate : null
+    )
+
+    return (
+      <div className={className} style={loaderContainerStyle}>
+        <div style={loaderStyle}>
+          {shadow ? <div style={shadowStyle} /> : null}
+        </div>
+      </div>
+    )
+  }
+)
+
+export default LoadingBar
