@@ -132,4 +132,4 @@ Add your own project. Make a PR
 
 ## License
 
-MIT © [Klendi Gocci](https://klendi.me) | klendi.me
+MIT © [Klendi Gocci](https://klendi.dev) | klendi.dev
