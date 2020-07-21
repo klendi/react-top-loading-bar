@@ -122,6 +122,10 @@ export default App
 
 Add your own project. Make a PR
 
+## Migrate from V.1
+
+- Replace onRef prop with 'ref', assign it to a react ref. Access methods with reactRef.current.xxx
+
 ## Code Style
 
 [![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
