@@ -1,159 +1,157 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 
-import LoadingBar from 'react-top-loading-bar';
+import LoadingBar from 'react-top-loading-bar'
+import './index.css'
+import { changeColor } from './changeColor'
+import Highlight from 'react-highlight'
 
-export default class App extends Component {
-  state = {
-    barColor: '#f11946',
-    color: 'red'
-  };
 
-  randomInt(min, max) {
-    var i = (Math.random() * 32768) >>> 0;
-    return (i % (min - max)) + min;
+const App = () => {
+  const [progress, setProgress] = useState(0)
+  const [barColor, setBarColor] = useState('#f11946')
+  const [buttonsColor, setButtonsColor] = useState('red')
+  const ref = useRef(null)
+  const [usingRef, setUsingRef] = useState(false)
+
+  const saveToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      window.alert('Copied To Clipboard')
+    })
   }
 
-  changeColor = () => {
-    const colors = ['red', 'purple', 'green', 'teal', 'orange', 'blue'];
-    let i = this.randomInt(0, colors.length);
-
-    const color = colors[i];
-
-    let barColor = '';
-    switch (color) {
-      case 'red':
-        barColor = '#f11946';
-        break;
-      case 'purple':
-        barColor = '#8800ff';
-        break;
-      case 'green':
-        barColor = '#28b485';
-        break;
-      case 'teal':
-        barColor = '#00ffe2';
-        break;
-      case 'orange':
-        barColor = '#ff7c05';
-        break;
-      case 'blue':
-        barColor = '#2998ff';
-        break;
-
-      default:
-        break;
+  const changeMode = refMode => {
+    if(refMode) {
+      setProgress(0)
     }
-    this.setState({ barColor, color });
-  };
 
-  render() {
-    return (
-      <div>
-        <LoadingBar
-          color={this.state.barColor}
-          onRef={ref => (this.LoadingBar = ref)}
-        />
-        <div className='text-container'>
-          <h1 className='header'>react-top-loading-bar</h1>
-          <div className='inline'>
-            <h3 className='package-install-text'>
-              npm i react-top-loading-bar
-            </h3>
-            <br />
-            or
-            <br />
-            <h3 className='package-install-text'>
-              yarn add react-top-loading-bar
-            </h3>
-          </div>
-        </div>
-        <div className='buttons-group'>
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.continuousStart()}
-          >
-            Start Continuous Loading Bar
-          </button>
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.staticStart()}
-          >
-            Start Static Loading Bar
-          </button>
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.complete()}
-          >
-            Complete
-          </button>
-          <br />
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.add(10)}
-          >
-            Add 10%
-          </button>
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.add(30)}
-          >
-            Add 30%
-          </button>
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.LoadingBar.add(50)}
-          >
-            Add 50%
-          </button>
+    setUsingRef(refMode)
+  }
 
-          <br />
-          <button
-            className={'btn ' + this.state.color}
-            onClick={() => this.changeColor()}
+  return (
+    <div>
+      {usingRef ? <LoadingBar color={barColor} ref={ref} shadow={true}/> :
+        <LoadingBar color={barColor} progress={progress} onLoaderFinished={() => setProgress(0)}/>}
+
+      <div className='text-container'>
+        <h1 className='header'>react-top-loading-bar</h1>
+        <div className='inline'>
+          <code
+            className='package-install-text'
+            onClick={() => saveToClipboard('npm i react-top-loading-bar')}
           >
-            Change Color
-          </button>
-          <a
-            className={'btn ' + this.state.color}
-            target='_blank'
-            rel='noopener noreferrer'
-            href='https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/'
+            npm i react-top-loading-bar
+          </code>
+          <br/>
+          or
+          <br/>
+          <code
+            className='package-install-text'
+            onClick={() => saveToClipboard('yarn add react-top-loading-bar')}
           >
-            Example
-          </a>
-          <div className='github-buttons'>
-            <a
-              className='github-button'
-              href='https://github.com/klendi/react-top-loading-bar'
-              data-size='large'
-              data-show-count='true'
-              aria-label='Star klendi/react-top-loading-bar on GitHub'
-            >
-              Star
-            </a>{' '}
-            <a
-              className='github-button'
-              href='https://github.com/klendi'
-              data-size='large'
-              data-show-count='true'
-              aria-label='Follow @klendi on GitHub'
-            >
-              Follow @klendi
-            </a>
-          </div>
-          <br />
-          <div>
-            Made with ❤️ by{' '}
-            <a
-              href='https://klendi.me'
-              style={{ color: this.state.barColor }}
-              target='_blank'
-            >
-              Klendi Gocci
-            </a>
-          </div>
+            yarn add react-top-loading-bar
+          </code>
         </div>
       </div>
-    );
-  }
+      <div className='buttons-group'>
+        <Highlight language="javascript" className="code-highlighter">
+          {usingRef ? `const ref = useRef(null);\n<LoadingBar color={barColor} ref={ref} />\nref.current.continuousStart()` : `const [progress,setProgress] = useState(0);\n<LoadingBar color={barColor} progress={progress}
+    onLoaderFinished={() => setProgress(0)} />`}
+        </Highlight>
+        <br/>
+        {usingRef ? <div>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.continuousStart()}
+            >
+              Start Continuous Loading Bar
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.staticStart()}
+            >
+              Start Static Loading Bar
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => ref.current.complete()}
+            >
+              Complete
+            </button>
+            <br/>
+          </div> :
+          <div>
+
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 10)}
+            >
+              Add 10%
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 30)}
+            >
+              Add 30%
+            </button>
+            <button
+              className={'btn ' + buttonsColor}
+              onClick={() => setProgress(progress + 50)}
+            >
+              Add 50%
+            </button>
+
+            <br/>
+          </div>
+        }
+
+        <button
+          className={'btn ' + buttonsColor}
+          onClick={() => {
+            const colors = changeColor(buttonsColor)
+            setBarColor(colors.barColor)
+            setButtonsColor(colors.color)
+          }}
+        >
+          Change Color
+        </button>
+        <button
+          className={'btn ' + buttonsColor}
+          onClick={() => changeMode(!usingRef)}
+        >
+          Change to {usingRef ? 'State' : 'Refs'} Mode
+        </button>
+        <a
+          className={'btn ' + buttonsColor}
+          target='_blank'
+          rel='noopener noreferrer'
+          href={ usingRef ? 'https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/exampleWithRef.js' : 'https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/exampleWithState.js'}
+        >
+          Example
+        </a>
+        <br/>
+        <br/>
+        <div className='github-buttons'>
+          <a className="github-button" href="https://github.com/klendi/react-top-loading-bar"
+             data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+             data-show-count="true" aria-label="Star klendi/react-top-loading-bar on GitHub">Star</a>{' '}
+          <a className="github-button" href="https://github.com/klendi"
+             data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+             data-show-count="true" aria-label="Follow @klendi on GitHub">Follow @klendi</a>
+        </div>
+        <br/>
+        <div>
+          Made with ❤️ by{' '}
+          <a
+            href='https://klendi.dev'
+            style={{ color: barColor }}
+            target='_blank'
+          >
+            Klendi Gocci
+          </a>
+        </div>
+      </div>
+    </div>
+  )
 }
+
+export default App
