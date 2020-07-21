@@ -35,77 +35,55 @@ https://unpkg.com/react-top-loading-bar
 ### With ref
 
 ```jsx
-import React, { Component } from 'react'
-
+import React, { useRef } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
-export default class ExampleWithRefs extends Component {
-  render() {
-    return (
-      <div>
-        <LoadingBar
-          height={3}
-          color='#f11946'
-          onRef={(ref) => (this.LoadingBar = ref)}
-        />
-        <button onClick={() => this.LoadingBar.continuousStart()}>
-          Start Continuous Bar Loading
-        </button>
-        <button onClick={() => this.LoadingBar.staticStart()}>
-          Start Static Bar Loading
-        </button>
-        <button onClick={() => this.LoadingBar.complete()}>Complete</button>
-        <br />
-        <button onClick={() => this.LoadingBar.add(10)}>Add 10</button>
-        <button onClick={() => this.LoadingBar.add(10)}>Add 30</button>
-      </div>
-    )
-  }
+const App = () => {
+  const ref = useRef(null)
+
+  return (
+    <div>
+      <LoadingBar color='#f11946' ref={ref} />
+      <button onClick={() => ref.current.continuousStart()}>
+        Start Continuous Loading Bar
+      </button>
+      <button onClick={() => ref.current.staticStart()}>
+        Start Static Loading Bar
+      </button>
+      <button onClick={() => ref.current.complete()}>Complete</button>
+      <br />
+    </div>
+  )
 }
+
+export default App
 ```
 
 ### With state
 
 ```jsx
-import React, { Component } from 'react'
-
+import React, { useState } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
-export default class App extends Component {
-  state = {
-    loadingBarProgress: 0,
-  }
+const App = () => {
+  const [progress, setProgress] = useState(0)
 
-  add = (value) => {
-    this.setState({
-      loadingBarProgress: this.state.loadingBarProgress + value,
-    })
-  }
-
-  complete = () => {
-    this.setState({ loadingBarProgress: 100 })
-  }
-
-  onLoaderFinished = () => {
-    this.setState({ loadingBarProgress: 0 })
-  }
-
-  render() {
-    return (
-      <div>
-        <LoadingBar
-          progress={this.state.loadingBarProgress}
-          height={3}
-          color='red'
-          onLoaderFinished={() => this.onLoaderFinished()}
-        />
-        <button onClick={() => this.add(10)}>Add 10</button>
-        <button onClick={() => this.add(30)}>Add 30</button>
-        <button onClick={() => this.complete()}>Complete</button>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <LoadingBar
+        color='#f11946'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+      <button onClick={() => setProgress(progress + 10)}>Add 10%</button>
+      <button onClick={() => setProgress(progress + 20)}>Add 20%</button>
+      <button onClick={() => setProgress(100)}>Complete</button>
+      <br />
+    </div>
+  )
 }
+
+export default App
 ```
 
 ## Demo
@@ -114,27 +92,28 @@ export default class App extends Component {
 
 ## Built-in Methods
 
-| Methods                                                                |    Parameters     | Descriptions                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------- | :---------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| add(value)                                                             |      Number       | Adds a value to the loading indicator.                                                                                                                                                                                        |
-| decrease(value)                                                        |      Number       | Decreases a value to the loading indicator.                                                                                                                                                                                   |
-| continousStart(startingValue) [typo - deprecated, use continuousStart] | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
-| continuousStart(startingValue)                                         | Number (optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an interval of 1s increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
-| staticStart(startingValue)                                             | Number (optional) | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                      |
-| complete()                                                             |                   | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                            |
+| Methods                                     |             Parameters              | Descriptions                                                                                                                                                                                                                |
+| ------------------------------------------- | :---------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| add(value)                                  |               Number                | Adds a value to the loading indicator.                                                                                                                                                                                      |
+| decrease(value)                             |               Number                | Decreases a value to the loading indicator.                                                                                                                                                                                 |
+| continuousStart(startingValue, refreshRate) | Number (optional), Number(optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an refreshRate, increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
+| staticStart(startingValue)                  |          Number (optional)          | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                    |
+| complete()                                  |                                     | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                          |
 
 ## Properties
 
-| Property               | Type     | Default | Description                                                                                                                                    |
-| :--------------------- | :------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| progress               | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                                          |
-| color                  | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc.              |
-| background(deprecated) | String   |         | (Please use color since it now haves the same functionality) The `background` css property of the bar. Can be used for gradients, images, etc. |
-| height                 | Number   | `3`     | The height of the loading bar in pixels.                                                                                                       |
-| className              | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                                          |
-| onLoaderFinished       | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                                      |
-| onProgressChange       | Function |         | This is called each time loading bar value changes.                                                                                            |
-| onRef                  | Function |         | This is used to access built in methods                                                                                                        |
+| Property         | Type     | Default | Description                                                                                                                       |
+| :--------------- | :------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------- |
+| progress         | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                             |
+| color            | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc. |
+| shadow           | Boolean  | `true`  | Enables / Disables shadow underneath the loader.                                                                                  |
+| height           | Number   | `2`     | The height of the loading bar in pixels.                                                                                          |
+| background       | String   | `3`     | The loader parent background color.                                                                                               |
+| transitionTime   | Number   | `300`   | Fade transition time in miliseconds.                                                                                              |
+| loaderSpeed      | Number   | `500`   | Loader transition speed in miliseconds.                                                                                           |
+| waitingTime      | Number   | `1000`  | The delay we wait when bar reaches 100% before we proceed fading the loader out.                                                  |
+| className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                             |
+| onLoaderFinished | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                         |
 
 ## Projects using react-top-loading-bar
 

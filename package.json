@@ -1,18 +1,22 @@
 {
   "name": "react-top-loading-bar",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
-  "author": "klendi",
+  "description": "A very simple, highly customisable react top loader component.",
+  "author": {
+    "name": "Klendi Gocci",
+    "email": "klendigocci@gmail.com",
+    "url": "https://github.com/klendi"
+  },
   "license": "MIT",
-  "repository": "klendi/react-top-loading-bar",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
+  "unpkg": "dist/index.umd.js",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "build": "microbundle-crl",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepublish": "run-s build",
     "test": "run-s test:unit test:lint test:build",
@@ -53,5 +57,35 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "react component",
+    "react-loading",
+    "react-loader",
+    "animated loader",
+    "react youtube like loader",
+    "react",
+    "animated react loader",
+    "react-animated-loader",
+    "react-top-loader",
+    "react",
+    "reactjs",
+    "react-component",
+    "loading-bar",
+    "youtube-loading-bar",
+    "loading",
+    "react-loading-bar",
+    "redux-loading-bar",
+    "loading bar",
+    "smooth",
+    "animated",
+    "youtube loading bar",
+    "top loading bar",
+    "component"
+  ],
+  "homepage": "https://klendi.github.io/react-top-loading-bar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klendi/react-top-loading-bar.git"
+  }
 }
