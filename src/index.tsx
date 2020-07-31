@@ -16,7 +16,7 @@ type IProps = {
   shadow?: boolean
   background?: string
   height?: number
-  onLoaderFinished?: () => {}
+  onLoaderFinished?: () => void
   className?: string
   loaderSpeed?: number
   transitionTime?: number
