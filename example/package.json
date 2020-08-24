@@ -1,7 +1,7 @@
 {
   "name": "react-top-loading-bar-example",
   "homepage": "https://klendi.github.io/react-top-loading-bar",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "dependencies": {
     "react": "file:../node_modules/react",
