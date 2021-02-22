@@ -256,4 +256,8 @@ const LoadingBar = forwardRef(
   }
 )
 
+export {
+  IProps,
+}
+
 export default LoadingBar
