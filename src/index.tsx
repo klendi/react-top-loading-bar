@@ -23,7 +23,13 @@ type IProps = {
   waitingTime?: number
 }
 
-const LoadingBar = forwardRef(
+export type LoadingBarRef = {
+  continuousStart: (startingValue: number, refreshRate: number) => void
+  staticStart: (startingValue: number) => void
+  complete: () => void;
+}
+
+const LoadingBar = forwardRef<LoadingBarRef, IProps>(
   (
     {
       progress,
@@ -36,7 +42,7 @@ const LoadingBar = forwardRef(
       loaderSpeed = 500,
       waitingTime = 1000,
       shadow = true,
-    }: IProps,
+    },
     ref
   ) => {
     const [localProgress, localProgressSet] = useState<number>(0)
