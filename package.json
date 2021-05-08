@@ -16,7 +16,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl",
+    "build": "react-scripts build",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepublish": "run-s build",
     "test": "run-s test:unit test:lint test:build",
@@ -83,9 +83,8 @@
     "top loading bar",
     "component"
   ],
-  "homepage": "https://klendi.github.io/react-top-loading-bar",
   "repository": {
     "type": "git",
-    "url": "https://github.com/klendi/react-top-loading-bar.git"
+    "url": "https://github.com/onomyprotocol/react-top-loading-bar.git"
   }
 }
