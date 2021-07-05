@@ -6,6 +6,7 @@ import {
   useState,
   forwardRef,
   useImperativeHandle,
+  useRef,
 } from 'react'
 import { useInterval } from './useInterval'
 import { randomInt } from './utils'
@@ -45,6 +46,7 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
     },
     ref
   ) => {
+    const isMounted = useRef(false);
     const [localProgress, localProgressSet] = useState<number>(0)
     const [pressedContinuous, setPressedContinuous] = useState<{
       active: boolean
@@ -92,6 +94,13 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
     const [shadowStyle, shadowStyleSet] = useState<CSSProperties>(
       initialShadowStyles
     )
+
+    useEffect(() => {
+      isMounted.current = true;
+      return () => {
+        isMounted.current = false;
+      }
+    }, []);
 
     useImperativeHandle(ref, () => ({
       continuousStart(startingValue: number, refreshRate: number = 1000) {
@@ -185,6 +194,9 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         }
 
         setTimeout(() => {
+          if (!isMounted.current) {
+            return;
+          }
           // now it can fade out
           loaderStyleSet({
             ...loaderStyle,
@@ -195,6 +207,9 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
           })
 
           setTimeout(() => {
+            if (!isMounted.current) {
+              return;
+            }
             // here we wait for it to fade
             if (pressedContinuous.active) {
               // if we have continous loader just ending, we kill it and reset it
