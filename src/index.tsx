@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  // eslint-disable-next-line no-unused-vars
   CSSProperties,
   useEffect,
   useState,
@@ -19,9 +18,13 @@ type IProps = {
   height?: number
   onLoaderFinished?: () => void
   className?: string
+  containerClassName?: string
   loaderSpeed?: number
   transitionTime?: number
   waitingTime?: number
+  style?: CSSProperties
+  containerStyle?: CSSProperties
+  shadowStyle?: CSSProperties
 }
 
 export type LoadingBarRef = {
@@ -43,6 +46,10 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
       loaderSpeed = 500,
       waitingTime = 1000,
       shadow = true,
+      containerStyle = {},
+      style = {},
+      shadowStyle: shadowStyleProp = {},
+      containerClassName = ''
     },
     ref
   ) => {
@@ -268,9 +275,9 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
     )
 
     return (
-      <div className={className} style={loaderContainerStyle}>
-        <div style={loaderStyle}>
-          {shadow ? <div style={shadowStyle} /> : null}
+      <div className={containerClassName} style={{...loaderContainerStyle, ...containerStyle}}>
+        <div className={className} style={{...loaderStyle, ...style}}>
+          {shadow ? <div style={{...shadowStyle, ...shadowStyleProp}} /> : null}
         </div>
       </div>
     )

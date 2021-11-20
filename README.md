@@ -109,10 +109,14 @@ export default App
 | shadow           | Boolean  | `true`  | Enables / Disables shadow underneath the loader.                                                                                  |
 | height           | Number   | `2`     | The height of the loading bar in pixels.                                                                                          |
 | background       | String   | `3`     | The loader parent background color.                                                                                               |
+| style       | CSSProperties   |    | The style attribute to loader's div                                                                                             |
+| containerStyle       | CSSProperties   |    | The style attribute to loader's container                                                                                            |
+| shadowStyle       | CSSProperties   |    | The style attribute to loader's shadow                                                                                          |
 | transitionTime   | Number   | `300`   | Fade transition time in miliseconds.                                                                                              |
 | loaderSpeed      | Number   | `500`   | Loader transition speed in miliseconds.                                                                                           |
 | waitingTime      | Number   | `1000`  | The delay we wait when bar reaches 100% before we proceed fading the loader out.                                                  |
 | className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                             |
+| containerClassName        | String   |         | You can provide a class you'd like to add to the loading bar container to add some css styles                                         |
 | onLoaderFinished | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                         |
 
 ## Projects using react-top-loading-bar
