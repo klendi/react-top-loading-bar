@@ -8,7 +8,7 @@ import {
   useRef,
 } from 'react'
 import { useInterval } from './useInterval'
-import { randomInt } from './utils'
+import { randomInt, randomValue } from './utils'
 
 type IProps = {
   progress?: number
@@ -264,9 +264,9 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
 
     useInterval(
       () => {
-        const random = randomInt(10, 20)
+        const random = randomValue(Math.min(10, (100-localProgress)/5), Math.min(20, (100-localProgress)/3));
 
-        if (localProgress + random < 90) {
+        if (localProgress + random < 100) {
           localProgressSet(localProgress + random)
           checkIfFull(localProgress + random)
         }
