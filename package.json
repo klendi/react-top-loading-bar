@@ -54,7 +54,8 @@
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "rollup-plugin-postcss": "^4.0.2"
   },
   "files": [
     "dist"
@@ -89,7 +90,5 @@
     "type": "git",
     "url": "https://github.com/klendi/react-top-loading-bar.git"
   },
-  "dependencies": {
-    "rollup-plugin-postcss": "^4.0.2"
-  }
+  "dependencies": {}
 }
