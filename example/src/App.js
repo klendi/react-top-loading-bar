@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import LoadingBar from "react-top-loading-bar";
 import "./index.css";
@@ -172,6 +172,7 @@ const App = () => {
             href="https://klendi.dev"
             style={{ color: barColor }}
             target="_blank"
+            rel="noreferrer"
           >
             Klendi Gocci
           </a>
