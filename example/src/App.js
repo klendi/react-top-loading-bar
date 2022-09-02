@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import LoadingBar from "react-top-loading-bar";
 import "./index.css";
@@ -10,7 +10,7 @@ const App = () => {
   const [barColor, setBarColor] = useState("#f11946");
   const [buttonsColor, setButtonsColor] = useState("red");
   const ref = useRef(null);
-  const [usingRef, setUsingRef] = useState(false);
+  const [usingRef, setUsingRef] = useState(true);
 
   const saveToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -172,6 +172,7 @@ const App = () => {
             href="https://klendi.dev"
             style={{ color: barColor }}
             target="_blank"
+            rel="noreferrer"
           >
             Klendi Gocci
           </a>
