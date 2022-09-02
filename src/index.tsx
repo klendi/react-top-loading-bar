@@ -10,7 +10,7 @@ import {
 import { useInterval } from './useInterval'
 import { randomInt } from './utils'
 
-type IProps = {
+export type IProps = {
   progress?: number
   color?: string
   shadow?: boolean
@@ -283,9 +283,5 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
     )
   }
 )
-
-export {
-  IProps,
-}
 
 export default LoadingBar
