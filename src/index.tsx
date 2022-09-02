@@ -28,8 +28,8 @@ export type IProps = {
 }
 
 export type LoadingBarRef = {
-  continuousStart: (startingValue: number, refreshRate: number) => void
-  staticStart: (startingValue: number) => void
+  continuousStart: (startingValue?: number, refreshRate?: number) => void
+  staticStart: (startingValue?: number) => void
   complete: () => void;
 }
 
@@ -110,7 +110,7 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
     }, []);
 
     useImperativeHandle(ref, () => ({
-      continuousStart(startingValue: number, refreshRate: number = 1000) {
+      continuousStart(startingValue?: number, refreshRate?: number = 1000) {
         if (pressedStaticStart.active) return
         if (usingProps) {
           console.warn(
@@ -128,7 +128,7 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         localProgressSet(val)
         checkIfFull(val)
       },
-      staticStart(startingValue: number) {
+      staticStart(startingValue?: number) {
         if (pressedContinuous.active) return
         if (usingProps) {
           console.warn(
