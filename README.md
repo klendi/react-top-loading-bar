@@ -108,7 +108,7 @@ export default App
 | color            | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc. |
 | shadow           | Boolean  | `true`  | Enables / Disables shadow underneath the loader.                                                                                  |
 | height           | Number   | `2`     | The height of the loading bar in pixels.                                                                                          |
-| background       | String   | `3`     | The loader parent background color.                                                                                               |
+| background       | String   | `transparent`     | The loader parent background color.                                                                                               |
 | style       | CSSProperties   |    | The style attribute to loader's div                                                                                             |
 | containerStyle       | CSSProperties   |    | The style attribute to loader's container                                                                                            |
 | shadowStyle       | CSSProperties   |    | The style attribute to loader's shadow                                                                                          |
