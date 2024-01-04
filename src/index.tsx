@@ -25,6 +25,7 @@ export type IProps = {
   style?: CSSProperties
   containerStyle?: CSSProperties
   shadowStyle?: CSSProperties
+  fade?: boolean
 }
 
 export type LoadingBarRef = {
@@ -49,7 +50,8 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
       containerStyle = {},
       style = {},
       shadowStyle: shadowStyleProp = {},
-      containerClassName = ''
+      containerClassName = '',
+      fade = true,
     },
     ref
   ) => {
@@ -195,77 +197,84 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         loaderStyleSet({
           ...loaderStyle,
           width: '100%',
-        })
+        });
         if (shadow) {
           shadowStyleSet({
             ...shadowStyle,
             left: _progress - 10 + '%',
-          })
+          });
         }
 
-        setTimeout(() => {
-          if (!isMounted.current) {
-            return;
-          }
-          // now it can fade out
-          loaderStyleSet({
-            ...loaderStyle,
-            opacity: 0,
-            width: '100%',
-            transition: `all ${transitionTime}ms ease-out`,
-            color: color,
-          })
-
+        // Check if the fade prop is true before initiating fade-out
+        if (fade) {
           setTimeout(() => {
             if (!isMounted.current) {
               return;
             }
-            // here we wait for it to fade
-            if (pressedContinuous.current.active) {
-              // if we have continuous loader just ending, we kill it and reset it
+            // now it can fade out
+            loaderStyleSet({
+              ...loaderStyle,
+              opacity: 0,
+              width: '100%',
+              transition: `all ${transitionTime}ms ease-out`,
+              color: color,
+            });
 
-              pressedContinuous.current = {
-                ...pressedContinuous.current,
-                active: false,
-              };
+            setTimeout(() => {
+              if (!isMounted.current) {
+                return;
+              }
+              // here we wait for it to fade
+              if (pressedContinuous.current.active) {
+                // if we have continuous loader just ending, we kill it and reset it
 
-              localProgressSet(0)
-              checkIfFull(0)
-            }
+                pressedContinuous.current = {
+                  ...pressedContinuous.current,
+                  active: false,
+                };
 
-            if (pressedStaticStart.active) {
-              setStaticStartPressed({
-                ...pressedStaticStart,
-                active: false,
-              })
-              localProgressSet(0)
-              checkIfFull(0)
-            }
+                localProgressSet(0);
+                checkIfFull(0);
+              }
 
-            if (onLoaderFinished) onLoaderFinished()
-            localProgressSet(0)
-            checkIfFull(0)
-          }, transitionTime)
-        }, waitingTime)
+              if (pressedStaticStart.active) {
+                setStaticStartPressed({
+                  ...pressedStaticStart,
+                  active: false,
+                });
+                localProgressSet(0);
+                checkIfFull(0);
+              }
+
+              if (onLoaderFinished) onLoaderFinished();
+              localProgressSet(0);
+              checkIfFull(0);
+            }, transitionTime);
+          }, waitingTime);
+        } else {
+          // If fade is false, the loading bar will not fade out
+          if (onLoaderFinished) onLoaderFinished();
+        }
       } else {
+        // existing code for loading progress less than 100%
         loaderStyleSet((_loaderStyle) => {
           return {
             ..._loaderStyle,
             width: _progress + '%',
             opacity: 1,
             transition: _progress > 0 ? `all ${loaderSpeed}ms ease` : '',
-          }
-        })
+          };
+        });
 
         if (shadow) {
           shadowStyleSet({
             ...shadowStyle,
             left: _progress - 5.5 + '%',
             transition: _progress > 0 ? `all ${loaderSpeed}ms ease` : '',
-          })
+          });
         }
       }
-    }
+    };
 
     useInterval(
       () => {
