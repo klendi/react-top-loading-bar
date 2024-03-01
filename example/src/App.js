@@ -9,6 +9,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const [barColor, setBarColor] = useState("#f11946");
   const [buttonsColor, setButtonsColor] = useState("red");
+  const [rtl, setRtl] = useState(false);
   const ref = useRef(null);
   const [usingRef, setUsingRef] = useState(true);
 
@@ -29,9 +30,10 @@ const App = () => {
   return (
     <div>
       {usingRef ? (
-        <LoadingBar color={barColor} ref={ref} shadow={true} />
+        <LoadingBar rtl={rtl} color={barColor} ref={ref} shadow={true} />
       ) : (
         <LoadingBar
+          rtl={rtl}
           color={barColor}
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
@@ -123,24 +125,26 @@ const App = () => {
         >
           Change Color
         </button>
+        <button className={"btn " + buttonsColor} onClick={() => setRtl(!rtl)}>
+          Change Direction
+        </button>
         <button
           className={"btn " + buttonsColor}
           onClick={() => changeMode(!usingRef)}
         >
           Change to {usingRef ? "State" : "Refs"} Mode
         </button>
-        <a
+        <button
           className={"btn " + buttonsColor}
-          target="_blank"
-          rel="noopener noreferrer"
-          href={
-            usingRef
+          onClick={() => {
+            const url = usingRef
               ? "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/exampleWithRef.js"
-              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/exampleWithState.js"
-          }
+              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/exampleWithState.js";
+            window.open(url, "_blank");
+          }}
         >
           Example
-        </a>
+        </button>
         <br />
         <br />
         <div className="github-buttons">
