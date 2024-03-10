@@ -99,6 +99,7 @@ export default App
 | continuousStart(startingValue, refreshRate) | Number (optional), Number(optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an refreshRate, increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
 | staticStart(startingValue)                  |          Number (optional)          | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                    |
 | complete()                                  |                                     | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                          |
+| getProgress()                               |                                     | Get the current progress value.                                                                                                                                                                                             |
 
 ## Properties
 
