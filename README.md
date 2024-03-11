@@ -35,15 +35,15 @@ https://unpkg.com/react-top-loading-bar
 ### With ref
 
 ```jsx
-import React, { useRef } from 'react'
-import LoadingBar from 'react-top-loading-bar'
+import React, { useRef } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 const App = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
 
   return (
     <div>
-      <LoadingBar color='#f11946' ref={ref} />
+      <LoadingBar color="#f11946" ref={ref} />
       <button onClick={() => ref.current.continuousStart()}>
         Start Continuous Loading Bar
       </button>
@@ -53,25 +53,25 @@ const App = () => {
       <button onClick={() => ref.current.complete()}>Complete</button>
       <br />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ### With state
 
 ```jsx
-import React, { useState } from 'react'
-import LoadingBar from 'react-top-loading-bar'
+import React, { useState } from "react";
+import LoadingBar from "react-top-loading-bar";
 
 const App = () => {
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(0);
 
   return (
     <div>
       <LoadingBar
-        color='#f11946'
+        color="#f11946"
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
@@ -80,10 +80,10 @@ const App = () => {
       <button onClick={() => setProgress(100)}>Complete</button>
       <br />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## Demo
@@ -103,22 +103,23 @@ export default App
 
 ## Properties
 
-| Property         | Type     | Default | Description                                                                                                                       |
-| :--------------- | :------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------- |
-| progress         | Number   | `0`     | The progress/width indicator, progress prop varies from `0` to `100`.                                                             |
-| color            | String   | `red`   | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc. |
-| shadow           | Boolean  | `true`  | Enables / Disables shadow underneath the loader.                                                                                  |
-| height           | Number   | `2`     | The height of the loading bar in pixels.                                                                                          |
-| background       | String   | `transparent`     | The loader parent background color.                                                                                               |
-| style       | CSSProperties   |    | The style attribute to loader's div                                                                                             |
-| containerStyle       | CSSProperties   |    | The style attribute to loader's container                                                                                            |
-| shadowStyle       | CSSProperties   |    | The style attribute to loader's shadow                                                                                          |
-| transitionTime   | Number   | `300`   | Fade transition time in miliseconds.                                                                                              |
-| loaderSpeed      | Number   | `500`   | Loader transition speed in miliseconds.                                                                                           |
-| waitingTime      | Number   | `1000`  | The delay we wait when bar reaches 100% before we proceed fading the loader out.                                                  |
-| className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                             |
-| containerClassName        | String   |         | You can provide a class you'd like to add to the loading bar container to add some css styles                                         |
-| onLoaderFinished | Function |         | This is called when the loading bar completes, reaches 100% of his width.                                                         |
+| Property           | Type          | Default       | Description                                                                                                                                                  |
+| :----------------- | :------------ | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| progress           | Number        | `0`           | The progress/width indicator, progress prop varies from `0` to `100`.                                                                                        |
+| color              | String        | `red`         | The color of the loading bar, color take values like css property `background:` do, for example `red`, `#000` `rgb(255,0,0)` etc.                            |
+| shadow             | Boolean       | `true`        | Enables / Disables shadow underneath the loader.                                                                                                             |
+| rtl                | Boolean       | `false`       | True: It could mean that the loading bar progresses from right to left. False: Conversely, it might mean that the loading bar progresses from left to right. |
+| height             | Number        | `2`           | The height of the loading bar in pixels.                                                                                                                     |
+| background         | String        | `transparent` | The loader parent background color.                                                                                                                          |
+| style              | CSSProperties |               | The style attribute to loader's div                                                                                                                          |
+| containerStyle     | CSSProperties |               | The style attribute to loader's container                                                                                                                    |
+| shadowStyle        | CSSProperties |               | The style attribute to loader's shadow                                                                                                                       |
+| transitionTime     | Number        | `300`         | Fade transition time in miliseconds.                                                                                                                         |
+| loaderSpeed        | Number        | `500`         | Loader transition speed in miliseconds.                                                                                                                      |
+| waitingTime        | Number        | `1000`        | The delay we wait when bar reaches 100% before we proceed fading the loader out.                                                                             |
+| className          | String        |               | You can provide a class you'd like to add to the loading bar to add some styles to it                                                                        |
+| containerClassName | String        |               | You can provide a class you'd like to add to the loading bar container to add some css styles                                                                |
+| onLoaderFinished   | Function      |               | This is called when the loading bar completes, reaches 100% of his width.                                                                                    |
 
 ## Projects using react-top-loading-bar
 

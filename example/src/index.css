@@ -255,3 +255,9 @@ hue-6-2: #e6c07b
   border-radius: 5px;
   display: inline-block;
 }
+
+@media only screen and (max-width: 500px) {
+  pre {
+    overflow: scroll;
+  }
+}

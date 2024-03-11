@@ -5,3 +5,4 @@ export function randomValue(min: number, max: number): number {
 export function randomInt(min: number, max: number): number {
   return Math.floor(randomValue(min, max))
 }
+ 
