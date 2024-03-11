@@ -113,7 +113,8 @@ export default App
 | style       | CSSProperties   |    | The style attribute to loader's div                                                                                             |
 | containerStyle       | CSSProperties   |    | The style attribute to loader's container                                                                                            |
 | shadowStyle       | CSSProperties   |    | The style attribute to loader's shadow                                                                                          |
-| transitionTime   | Number   | `300`   | Fade transition time in miliseconds.                                                                                              |
+| transitionTime   | Number   | `300`   | Fade transition time in miliseconds.
+| fade             | Boolean  | `true`  | Fade status when the progress bar reaches at 100%.                                                                                                |
 | loaderSpeed      | Number   | `500`   | Loader transition speed in miliseconds.                                                                                           |
 | waitingTime      | Number   | `1000`  | The delay we wait when bar reaches 100% before we proceed fading the loader out.                                                  |
 | className        | String   |         | You can provide a class you'd like to add to the loading bar to add some styles to it                                             |
