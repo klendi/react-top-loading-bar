@@ -32,7 +32,8 @@ export type LoadingBarRef = {
   continuousStart: (startingValue?: number, refreshRate?: number) => void;
   staticStart: (startingValue?: number) => void;
   complete: () => void;
-};
+  getProgress: () => number;
+}
 
 const LoadingBar = forwardRef<LoadingBarRef, IProps>(
   (
@@ -160,7 +161,10 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         localProgressSet(100);
         checkIfFull(100);
       },
-    }));
+      getProgress() {
+        return localProgress;
+      }
+    }))
 
     useEffect(() => {
       loaderStyleSet({
