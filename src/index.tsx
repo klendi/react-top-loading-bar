@@ -419,4 +419,4 @@ export const useLoadingBar = (props: IProps): Omit<IContext, "setProps"> => {
   };
 };
 
-export default LoadingBar;
+export { LoadingBar as default };

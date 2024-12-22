@@ -1,4 +1,4 @@
-import React, { useState, useRef, RefObject } from "react";
+import React, { useState, useRef } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import atom from "react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark";
@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
   const [barColor, setBarColor] = useState<string>("#f11946");
   const [buttonsColor, setButtonsColor] = useState<string>("red");
-  const ref: RefObject<LoadingBarRef> = useRef(null);
+  const ref = useRef<LoadingBarRef>(null);
   const [usingRef, setUsingRef] = useState<boolean>(true);
   const [usingHooks, setUsingHooks] = useState<boolean>(true);
 
