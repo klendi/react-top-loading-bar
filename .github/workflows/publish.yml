@@ -1,12 +1,9 @@
 name: Publish
 
 on:
-  release:
-    types: [prereleased]
   push:
     branches:
       - main
-      - v*
 
 jobs:
   build:
