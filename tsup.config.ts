@@ -9,4 +9,6 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   external: ["react"],
+  minify: true,
+  globalName: "ReactTopLoadingBar",
 });
