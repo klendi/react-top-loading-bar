@@ -397,7 +397,7 @@ export const LoadingBarContainer = ({
   );
 };
 
-export const useLoadingBar = (props: IProps): Omit<IContext, "setProps"> => {
+export const useLoadingBar = (props?: IProps): Omit<IContext, "setProps"> => {
   const context = React.useContext(LoaderContext);
 
   if (!context) {
