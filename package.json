@@ -1,6 +1,6 @@
 {
   "name": "react-top-loading-bar",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "description": "A very simple, highly customisable react top loader component.",
   "author": {
     "name": "Klendi Goci",
@@ -11,6 +11,7 @@
   "module": "./dist/index.mjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.js",
@@ -28,7 +29,7 @@
     "prepublishOnly": "npm run build",
     "test:build": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/dist"
+    "deploy": "gh-pages -d ./example/dist"
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18 || ^19"
