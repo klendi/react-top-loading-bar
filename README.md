@@ -32,6 +32,40 @@ https://unpkg.com/react-top-loading-bar
 
 ## Usage
 
+### Using hooks
+
+```jsx
+import { useLoadingBar } from "react-top-loading-bar";
+
+const App = () => {
+  const { start, complete } = useLoadingBar({
+    color: "blue",
+    height: 2,
+  });
+
+  return (
+    <div>
+      <button onClick={() => start()}>Start</button>
+      <button onClick={() => complete()}>Complete</button>
+    </div>
+  );
+};
+```
+
+#### Wrap the app with LoadingBarContainer
+
+```jsx
+import { LoadingBarContainer } from "react-top-loading-bar";
+
+const Parent = () => {
+  return (
+    <LoadingBarContainer>
+      <App />
+    </LoadingBarContainer>
+  );
+};
+```
+
 ### With ref
 
 ```jsx
@@ -52,7 +86,6 @@ const App = () => {
         Start Static Loading Bar
       </button>
       <button onClick={() => ref.current?.complete()}>Complete</button>
-      <br />
     </div>
   );
 };
@@ -77,7 +110,6 @@ const App = () => {
       <button onClick={() => setProgress(progress + 10)}>Add 10%</button>
       <button onClick={() => setProgress(progress + 20)}>Add 20%</button>
       <button onClick={() => setProgress(100)}>Complete</button>
-      <br />
     </div>
   );
 };
@@ -91,8 +123,9 @@ const App = () => {
 
 | Methods                                     |             Parameters              | Descriptions                                                                                                                                                                                                                |
 | ------------------------------------------- | :---------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| add(value)                                  |               Number                | Adds a value to the loading indicator.                                                                                                                                                                                      |
+| increase(value)                             |               Number                | Adds a value to the loading indicator.                                                                                                                                                                                      |
 | decrease(value)                             |               Number                | Decreases a value to the loading indicator.                                                                                                                                                                                 |
+| start(loaderType?)                          | `continuous` (default) or `static`  | Starts the loading indicator. If type is "static" it will start the static bar otherwise it will start the animated continuous bar.                                                                                         |
 | continuousStart(startingValue, refreshRate) | Number (optional), Number(optional) | Starts the loading indicator with a random starting value between 20-30, then repetitively after an refreshRate, increases it by a random value between 2-10. This continues until it reaches 90% of the indicator's width. |
 | staticStart(startingValue)                  |          Number (optional)          | Starts the loading indicator with a random starting value between 30-50.                                                                                                                                                    |
 | complete()                                  |                                     | Makes the loading indicator reach 100% of his width and then fade.                                                                                                                                                          |
@@ -117,21 +150,15 @@ const App = () => {
 | containerClassName | String        |               | You can provide a class you'd like to add to the loading bar container to add some css styles                                     |
 | onLoaderFinished   | Function      |               | This is called when the loading bar completes, reaches 100% of his width.                                                         |
 
-## Projects using react-top-loading-bar
-
-- [React Movies](https://github.com/klendi/react-movies)
-- [WCYB](https://github.com/klendi/wcyb)
-
-Add your own project. Make a PR
-
 ## Migrate from V.1
 
 - Replace onRef prop with 'ref', assign it to a react ref. Access methods with reactRef.current.xxx
 
-## Code Style
+## Migrate from V.2
 
-[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
+- Replace ref.current.continuousStart() with ref.current?.start()
+- Replace ref.current.staticStart() with ref.current?.start("static")
 
 ## License
 
-MIT © [Klendi Gocci](https://klendi.dev) | klendi.dev
+MIT © [Klendi Goci](https://klendi.dev) | [klendi.dev](https://klendi.dev) | GitHub [@klendi](https://github.com/klendi)

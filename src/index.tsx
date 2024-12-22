@@ -10,7 +10,7 @@ import {
 import { useInterval } from "./useInterval";
 import { randomInt, randomValue } from "./utils";
 
-export type IProps = {
+export interface IProps {
   progress?: number;
   color?: string;
   shadow?: boolean;
@@ -25,9 +25,9 @@ export type IProps = {
   style?: CSSProperties;
   containerStyle?: CSSProperties;
   shadowStyle?: CSSProperties;
-};
+}
 
-export type LoadingBarRef = {
+export interface LoadingBarRef {
   continuousStart: (startingValue?: number, refreshRate?: number) => void;
   staticStart: (startingValue?: number) => void;
   start: (
@@ -36,8 +36,10 @@ export type LoadingBarRef = {
     refreshRate?: number,
   ) => void;
   complete: () => void;
+  increase: (value: number) => void;
+  decrease: (value: number) => void;
   getProgress: () => number;
-};
+}
 
 const LoadingBar = forwardRef<LoadingBarRef, IProps>(
   (
@@ -181,7 +183,7 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         checkIfFull(val);
       },
       complete() {
-        if (usingProps) {
+        if (progress !== undefined) {
           console.warn(
             "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!",
           );
@@ -189,6 +191,32 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
         }
         localProgressSet(100);
         checkIfFull(100);
+      },
+      increase(value: number) {
+        if (progress !== undefined) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!",
+          );
+          return;
+        }
+        localProgressSet((prev) => {
+          const newVal = prev + value;
+          checkIfFull(newVal);
+          return newVal;
+        });
+      },
+      decrease(value: number) {
+        if (progress !== undefined) {
+          console.warn(
+            "react-top-loading-bar: You can't use both controlling by props and ref methods to control the bar!",
+          );
+          return;
+        }
+        localProgressSet((prev) => {
+          const newVal = prev - value;
+          checkIfFull(newVal);
+          return newVal;
+        });
       },
       getProgress() {
         return localProgress;
@@ -331,45 +359,63 @@ const LoadingBar = forwardRef<LoadingBarRef, IProps>(
   },
 );
 
+interface IContext
+  extends Omit<LoadingBarRef, "continuousStart" | "staticStart"> {
+  setProps: (props: IProps) => void;
+}
+
+const LoaderContext = React.createContext<IContext>(undefined as any);
+
 export const LoadingBarContainer = ({
   children,
+  props,
 }: {
   children: React.ReactNode;
+  props?: Omit<IProps, "progress">;
 }) => {
-  const context = React.createContext({
-    start: () => {},
-    complete: () => {},
-    getProgress: () => 0,
-    setProgress: (val: number) => {},
-  });
-
-  const [progress, setProgress] = useState(0);
+  const [hookProps, setProps] = useState<IProps>(props || {});
 
   const ref = useRef<LoadingBarRef>(null);
 
+  const start = (type: "continuous" | "static" = "continuous") =>
+    ref.current?.start(type);
+
   return (
-    <context.Provider
+    <LoaderContext.Provider
       value={{
-        start: () => {},
-        complete: () => {},
-        getProgress: () => 0,
-        setProgress: (val: number) => {},
+        start,
+        complete: () => ref.current?.complete(),
+        getProgress: () => ref.current?.getProgress() || 0,
+        increase: (value: number) => ref.current?.increase(value),
+        decrease: (value: number) => ref.current?.decrease(value),
+        setProps: (props: IProps) => setProps({ ...props, ...hookProps }),
       }}
     >
-      <LoadingBar ref={ref} />
+      <LoadingBar ref={ref} {...hookProps} />
       {children}
-    </context.Provider>
+    </LoaderContext.Provider>
   );
 };
 
-export const useLoadingBar = () => {
-  const context = useContext(LoadingBarContext);
+export const useLoadingBar = (props: IProps): Omit<IContext, "setProps"> => {
+  const context = React.useContext(LoaderContext);
+
+  if (!context) {
+    throw new Error(
+      "[react-top-loading-bar] useLoadingBar hook must be used within a LoadingBarContainer. Try wrapping parent component in <LoadingBarContainer>.",
+    );
+  }
+
+  useEffect(() => {
+    if (props) context.setProps(props);
+  }, []);
 
   return {
-    start: () => {},
-    complete: () => {},
-    getProgress: () => 0,
-    setProgress: (val: number) => {},
+    start: context.start,
+    complete: context.complete,
+    increase: context.increase,
+    decrease: context.decrease,
+    getProgress: context.getProgress,
   };
 };
 

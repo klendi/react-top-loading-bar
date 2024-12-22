@@ -2,10 +2,7 @@ import React, { useState, useRef, RefObject } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import atom from "react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark";
-import LoadingBar, {
-  LoadingBarRef,
-  LoadingBarContainer,
-} from "react-top-loading-bar";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 import "./index.css";
 import { changeColor } from "./changeColor";
@@ -19,6 +16,7 @@ const App: React.FC = () => {
   const [buttonsColor, setButtonsColor] = useState<string>("red");
   const ref: RefObject<LoadingBarRef> = useRef(null);
   const [usingRef, setUsingRef] = useState<boolean>(true);
+  const [usingHooks, setUsingHooks] = useState<boolean>(true);
 
   const changeMode = (refMode: boolean) => {
     if (refMode) {
@@ -58,7 +56,11 @@ const App: React.FC = () => {
           className="code-highlighter"
         >
           {usingRef
-            ? `const ref = useRef<LoadingBarRef>(null);\n\n<LoadingBar ref={ref} />\n\nref.current?.start()`
+            ? usingHooks
+              ? `const { start, complete } = useLoadingBar({ color: "blue", height: 2 });
+              \n<button onClick={() => start()}>Start</button>
+            `
+              : `const ref = useRef<LoadingBarRef>(null);\n\n<LoadingBar ref={ref} />\n\nref.current?.start()`
             : `const [progress, setProgress] = useState(0);\n\n<LoadingBar color={barColor} progress={progress}
     onLoaderFinished={() => setProgress(0)} />`}
         </SyntaxHighlighter>
@@ -126,14 +128,27 @@ const App: React.FC = () => {
         >
           Change to {usingRef ? "State" : "Refs"} Mode
         </button>
+
+        {usingRef && (
+          <button
+            className={"btn " + buttonsColor}
+            onClick={() => setUsingHooks(!usingHooks)}
+          >
+            {usingHooks
+              ? "Using Hooks, Change to Ref"
+              : "Using Ref, Change to Hooks"}
+          </button>
+        )}
         <a
           className={"btn " + buttonsColor}
           target="_blank"
           rel="noopener noreferrer"
           href={
             usingRef
-              ? "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/exampleWithRef.js"
-              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/exampleWithState.js"
+              ? usingHooks
+                ? "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithContainer.tsx"
+                : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithRef.tsx"
+              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithState.tsx"
           }
         >
           Example
