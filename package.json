@@ -1,6 +1,6 @@
 {
   "name": "react-top-loading-bar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A very simple, highly customisable react top loader component.",
   "author": {
     "name": "Klendi Goci",
@@ -9,9 +9,7 @@
   },
   "license": "MIT",
   "module": "./dist/index.mjs",
-  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.js",
