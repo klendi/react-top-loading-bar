@@ -1,24 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, RefObject } from "react";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
+import atom from "react-syntax-highlighter/dist/esm/styles/hljs/atom-one-dark";
+import LoadingBar, {
+  LoadingBarRef,
+  LoadingBarContainer,
+} from "react-top-loading-bar";
 
-import LoadingBar from "react-top-loading-bar";
 import "./index.css";
 import { changeColor } from "./changeColor";
-import Highlight from "react-highlight";
+import Button from "./components/Button";
 
-const App = () => {
-  const [progress, setProgress] = useState(0);
-  const [barColor, setBarColor] = useState("#f11946");
-  const [buttonsColor, setButtonsColor] = useState("red");
-  const ref = useRef(null);
-  const [usingRef, setUsingRef] = useState(true);
+SyntaxHighlighter.registerLanguage("javascript", js);
 
-  const saveToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      window.alert("Copied To Clipboard");
-    });
-  };
+const App: React.FC = () => {
+  const [progress, setProgress] = useState<number>(0);
+  const [barColor, setBarColor] = useState<string>("#f11946");
+  const [buttonsColor, setButtonsColor] = useState<string>("red");
+  const ref: RefObject<LoadingBarRef> = useRef(null);
+  const [usingRef, setUsingRef] = useState<boolean>(true);
 
-  const changeMode = (refMode) => {
+  const changeMode = (refMode: boolean) => {
     if (refMode) {
       setProgress(0);
     }
@@ -33,6 +35,7 @@ const App = () => {
       ) : (
         <LoadingBar
           color={barColor}
+          shadow
           progress={progress}
           onLoaderFinished={() => setProgress(0)}
         />
@@ -41,48 +44,42 @@ const App = () => {
       <div className="text-container">
         <h1 className="header">react-top-loading-bar</h1>
         <div className="inline">
-          <code
-            className="package-install-text"
-            onClick={() => saveToClipboard("npm i react-top-loading-bar")}
-          >
-            npm i react-top-loading-bar
-          </code>
+          <Button>npm i react-top-loading-bar</Button>
           <br />
           or
           <br />
-          <code
-            className="package-install-text"
-            onClick={() => saveToClipboard("yarn add react-top-loading-bar")}
-          >
-            yarn add react-top-loading-bar
-          </code>
+          <Button>yarn add react-top-loading-bar</Button>
         </div>
       </div>
       <div className="buttons-group">
-        <Highlight language="javascript" className="code-highlighter">
+        <SyntaxHighlighter
+          language="javascript"
+          style={atom}
+          className="code-highlighter"
+        >
           {usingRef
-            ? `const ref = useRef(null);\n<LoadingBar color={barColor} ref={ref} />\nref.current.continuousStart()`
-            : `const [progress,setProgress] = useState(0);\n<LoadingBar color={barColor} progress={progress}
+            ? `const ref = useRef<LoadingBarRef>(null);\n\n<LoadingBar ref={ref} />\n\nref.current?.start()`
+            : `const [progress, setProgress] = useState(0);\n\n<LoadingBar color={barColor} progress={progress}
     onLoaderFinished={() => setProgress(0)} />`}
-        </Highlight>
+        </SyntaxHighlighter>
         <br />
         {usingRef ? (
           <div>
             <button
               className={"btn " + buttonsColor}
-              onClick={() => ref.current.continuousStart()}
+              onClick={() => ref.current?.start()}
             >
               Start Continuous Loading Bar
             </button>
             <button
               className={"btn " + buttonsColor}
-              onClick={() => ref.current.staticStart()}
+              onClick={() => ref.current?.start("static")}
             >
               Start Static Loading Bar
             </button>
             <button
               className={"btn " + buttonsColor}
-              onClick={() => ref.current.complete()}
+              onClick={() => ref.current?.complete()}
             >
               Complete
             </button>
@@ -174,7 +171,7 @@ const App = () => {
             target="_blank"
             rel="noreferrer"
           >
-            Klendi Gocci
+            Klendi Goci
           </a>
         </div>
       </div>

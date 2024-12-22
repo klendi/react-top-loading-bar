@@ -1,61 +1,49 @@
 {
   "name": "react-top-loading-bar",
-  "version": "2.3.1",
+  "version": "3.0.0",
   "description": "A very simple, highly customisable react top loader component.",
   "author": {
-    "name": "Klendi Gocci",
+    "name": "Klendi Goci",
     "email": "klendigocci@gmail.com",
     "url": "https://github.com/klendi"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "source": "src/index.tsx",
-  "unpkg": "dist/index.umd.js",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "scripts": {
-    "build": "microbundle-crl",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepublish": "run-s build",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build",
     "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:build": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16 || ^17 || ^18"
+    "react": "^16 || ^17 || ^18 || ^19"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.0",
-    "@types/react": "^18.0.18",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
-    "babel-eslint": "^10.0.3",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-config-standard-react": "^11.0.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-react": "^7.31.2",
-    "eslint-plugin-standard": "^4.1.0",
-    "gh-pages": "^4.0.0",
-    "microbundle-crl": "^0.13.11",
+    "@types/react": "^19.0.2",
+    "gh-pages": "^6.2.0",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.4.16",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "rollup-plugin-postcss": "^4.0.2"
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
   },
   "files": [
     "dist"
@@ -89,6 +77,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/klendi/react-top-loading-bar.git"
-  },
-  "dependencies": {}
+  }
 }
