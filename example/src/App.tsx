@@ -146,9 +146,9 @@ const App: React.FC = () => {
           href={
             usingRef
               ? usingHooks
-                ? "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithContainer.tsx"
-                : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithRef.tsx"
-              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/examples/ExampleWithState.tsx"
+                ? "https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/ExampleWithContainer.tsx"
+                : "https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/ExampleWithRef.tsx"
+              : "https://github.com/klendi/react-top-loading-bar/blob/master/example/src/examples/ExampleWithState.tsx"
           }
         >
           Example
